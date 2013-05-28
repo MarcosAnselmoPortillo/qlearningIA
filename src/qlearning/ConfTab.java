@@ -4,7 +4,7 @@ package qlearning;
  *
  * @author Leo
  */
-public class Config {
+public class ConfTab {
     
     public int size; //Tamaño del tablero
     
@@ -66,6 +66,14 @@ public class Config {
         this.rPozo = rPozo;
     }
 
+    public float getrNeutro() {
+        return rNeutro;
+    }
+
+    public void setrNeutro(float rNeutro) {
+        this.rNeutro = rNeutro;
+    }
+    
     public float getrMalo() {
         return rMalo;
     }
