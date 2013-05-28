@@ -4,7 +4,6 @@ package qlearning;
  *
  * @author Leo
  */
-import java.util.ArrayList;
 
 public class Matriz {
     
@@ -13,5 +12,6 @@ public class Matriz {
      * lo q tengo q ver es como definir que los elementos 
      * sean solo de tipo Estado
      */
-    public ArrayList estados;
+    public Estado estados[]; //Arreglo de elementos tipo Estado  
+    
 }

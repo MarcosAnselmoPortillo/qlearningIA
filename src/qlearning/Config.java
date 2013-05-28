@@ -4,7 +4,7 @@ package qlearning;
  *
  * @author Leo
  */
-public class Tablero {
+public class Config {
     
     public int size; //Tamaño del tablero
     
@@ -14,7 +14,9 @@ public class Tablero {
     
     public int episodios; //Cantidad de episodios
         
-    public float rPozo; //Valor de la recompensa asociada a pozo 
+    public float rPozo; //Valor de la recompensa asociada a pozo
+    
+    public float rNeutro; //Valor de la recompensa asociada a un casillero neutro
     
     public float rMalo; //Valor de la recompensa asociada a malo
     
