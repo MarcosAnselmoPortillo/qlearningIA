@@ -65,4 +65,21 @@ public class Matriz {
              estados[i]=e;            
         }
      }
+    
+    /**
+     * la idea es recuperar de la interfaz la recompensa del estado 
+     * que se quiere setear, y modificar, en la posición seleccionada,
+     * la recompensa de ese estado.
+     */
+    
+    public void estadosManuales(Estado eTab, int x, int y){
+        int i;
+        ConfTab tab = new ConfTab();
+        int lado;
+        lado = tab.getSize();
+        i=x*lado+y;
+        Estado e= new Estado();
+        e.recompensa=eTab.getRecompensa();
+        estados[i]=e;
+    }
 }
