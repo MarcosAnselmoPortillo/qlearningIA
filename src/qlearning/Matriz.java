@@ -17,10 +17,15 @@ public class Matriz {
      */
     public Estado estados[]; //Arreglo de elementos tipo Estado  
     
+    /**
+    * Se inicializan todos los estados a neutro
+    * para despues poder cambiar a mano los necesarios
+    */
     public void inicializarEstados(){
         ConfTab x = new ConfTab ();
         int lado;
         lado = x.getSize();
+        // Poner todos los estados a nuetro
         for (int i = 0; i < lado*lado; i++) {
             Estado e = new Estado();
             e.setRecompensa(x.getrNeutro());
