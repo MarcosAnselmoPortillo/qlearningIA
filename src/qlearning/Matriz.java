@@ -1,5 +1,6 @@
 package qlearning;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -30,6 +31,81 @@ public class Matriz {
             Estado e = new Estado();
             e.setRecompensa(x.getrNeutro());
             e.setPosAbs(i);
+            //inicializando la lista de acciones posibles
+            int posY = i/lado;
+            int posX = i%lado;
+            //comprobar movimiento NO
+            int desY = posY - 1;
+            int desX = posX - 1;
+            if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
+                Accion a = new Accion();
+                a.setDestino(estados[(desX*lado+desY)]);
+                a.setValorQ(0);
+                e.acciones.add(a);
+            }
+            //comprobar movimiento N
+            desY = posY - 1;
+            desX = posX;
+            if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
+                Accion a = new Accion();
+                a.setDestino(estados[(desX*lado+desY)]);
+                a.setValorQ(0);
+                e.acciones.add(a);
+            }
+            //comprobar movimiento NE
+            desY = posY - 1;
+            desX = posX + 1;
+            if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
+                Accion a = new Accion();
+                a.setDestino(estados[(desX*lado+desY)]);
+                a.setValorQ(0);
+                e.acciones.add(a);
+            }
+            //comprobar movimiento E
+            desY = posY;
+            desX = posX + 1;
+            if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
+                Accion a = new Accion();
+                a.setDestino(estados[(desX*lado+desY)]);
+                a.setValorQ(0);
+                e.acciones.add(a);
+            }
+            //comprobar movimiento SE
+            desY = posY + 1;
+            desX = posX + 1;
+            if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
+                Accion a = new Accion();
+                a.setDestino(estados[(desX*lado+desY)]);
+                a.setValorQ(0);
+                e.acciones.add(a);
+            }
+            //comprobar movimiento S
+            desY = posY + 1;
+            desX = posX;
+            if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
+                Accion a = new Accion();
+                a.setDestino(estados[(desX*lado+desY)]);
+                a.setValorQ(0);
+                e.acciones.add(a);
+            }
+            //comprobar movimiento SO
+            desY = posY + 1;
+            desX = posX - 1;
+            if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
+                Accion a = new Accion();
+                a.setDestino(estados[(desX*lado+desY)]);
+                a.setValorQ(0);
+                e.acciones.add(a);
+            }
+            //comprobar movimiento O
+            desY = posY;
+            desX = posX - 1;
+            if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
+                Accion a = new Accion();
+                a.setDestino(estados[(desX*lado+desY)]);
+                a.setValorQ(0);
+                e.acciones.add(a);
+            }
             estados[i]= e;               
         }
      }
