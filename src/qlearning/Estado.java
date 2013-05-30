@@ -6,7 +6,7 @@ package qlearning;
  */
 public class Estado {
     
-    public float recompensa;
+    public float recompensa; //Valor de recompensa para el estado
     
     public Accion acciones;
 
