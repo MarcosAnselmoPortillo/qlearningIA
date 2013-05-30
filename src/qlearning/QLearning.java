@@ -6,7 +6,7 @@ package qlearning;
 
 /**
  *
- * @author marcos
+ * @author Grupo 6
  */
 public class QLearning {
 
@@ -14,6 +14,9 @@ public class QLearning {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+       
+        Tablero gui = new Tablero();
+        
+        gui.setVisible(true);
     }
 }

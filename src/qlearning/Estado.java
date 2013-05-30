@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Leo
+ * @author Grupo 6
  */
 public class Estado {
     
