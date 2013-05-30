@@ -2,7 +2,7 @@ package qlearning;
 
 /**
  *
- * @author Leo
+ * @author Grupo 6
  */
 public class Estado {
     

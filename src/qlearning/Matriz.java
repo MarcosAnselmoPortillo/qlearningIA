@@ -5,7 +5,7 @@ import java.util.Random;
 
 /**
  *
- * @author Leo
+ * @author Grupo 6
  */
 
 public class Matriz {
@@ -72,14 +72,12 @@ public class Matriz {
      * la recompensa de ese estado.
      */
     
-    public void estadosManuales(Estado eTab, int x, int y){
+    public void estadosManuales(float rTab, int x, int y){
         int i;
         ConfTab tab = new ConfTab();
         int lado;
         lado = tab.getSize();
         i=x*lado+y;
-        Estado e= new Estado();
-        e.recompensa=eTab.getRecompensa();
-        estados[i]=e;
+        estados[i].setRecompensa(rTab);
     }
 }
