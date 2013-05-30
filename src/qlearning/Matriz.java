@@ -29,6 +29,7 @@ public class Matriz {
         for (int i = 0; i < lado*lado; i++) {
             Estado e = new Estado();
             e.setRecompensa(x.getrNeutro());
+            e.setPosAbs(i);
             estados[i]= e;               
         }
      }
@@ -40,6 +41,7 @@ public class Matriz {
          Random aleat = new Random();
          for (int i = 0; i < lado*lado; i++) {
              Estado e= new Estado();
+             e.setPosAbs(i);
              float numale = aleat.nextFloat();
              if (numale<0.2) {
                  e.setRecompensa(x.getrMalo());
