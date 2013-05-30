@@ -1,5 +1,7 @@
 package qlearning;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Leo
@@ -8,7 +10,7 @@ public class Estado {
     
     public float recompensa; //Valor de recompensa para el estado
     
-    public Accion acciones;
+    public ArrayList<Accion> acciones;
 
     public float getRecompensa() {
         return recompensa;
