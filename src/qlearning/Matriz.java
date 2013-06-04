@@ -158,4 +158,6 @@ public class Matriz {
         i=x*lado+y;
         estados[i].setRecompensa(rTab);
     }
+    
+    
 }
