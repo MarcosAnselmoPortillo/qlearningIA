@@ -25,6 +25,8 @@ public class ConfTab {
     public float rExc; //Valor de la recompensa asociada a excelente
     
     public float rFin; //Valor de la recompensa asociada al estado Final
+    
+    public static ConfTab instance = null;
 
     public int getSize() {
         return size;
@@ -105,5 +107,13 @@ public class ConfTab {
     public void setrFin(float rFin) {
         this.rFin = rFin;
     }
+    
+    public static ConfTab getInstance()
+	{
+		if(instance == null)
+			instance = new ConfTab();
+		
+		return instance;
+	}
     
 }
