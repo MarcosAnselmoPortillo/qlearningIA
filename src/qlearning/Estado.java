@@ -1,6 +1,7 @@
 package qlearning;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -38,21 +39,26 @@ public class Estado {
         this.recompensa = recompensa;
     }
     
-    public Estado obtenerEstadoMayorQ(Estado e){
+    public Accion accionMayorQ(Estado e){
         int longLista = acciones.size();
-        Estado eMayorQ = e.acciones.get(0).destino;
+//        Estado eMayorQ = e.acciones.get(0).destino;
+        Accion aMayorQ = new Accion();
         if (longLista >0){ // pude pasar que la lista de estados esté vacía??
-            float valorQresg = eMayorQ.acciones.get(0).valorQ;
+            float valorQresg = acciones.get(0).valorQ;
             for (int i = 0 ; i < longLista;i++){
-                if (eMayorQ.acciones.get(i).valorQ > valorQresg){
-                    eMayorQ = acciones.get(i).destino;
+                if (acciones.get(i).valorQ > valorQresg){
+                    aMayorQ = acciones.get(i);
                 }
             } 
         }
                
-        return eMayorQ;
+        return aMayorQ;
+    }
+    
+    public Accion accionAleatoria (Estado e){
+        int x = new Random().nextInt(e.acciones.size());
+        Accion accion = e.acciones.get(x);
+        return accion;
     }
         
 }
-    
-

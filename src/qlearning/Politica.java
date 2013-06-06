@@ -28,17 +28,42 @@ public class Politica {
 
     //Politica de seleccion de acciones e-greedy
     public Accion eGreedy (Estado e){
+        Accion a;
         if (ConfTab.getInstance().getEpsilon() < numAleat()) {
-            
-                        
+            a = e.accionMayorQ(e);
+        } else {
+            a = e.accionAleatoria(e);
         }
-        
         return a;
     }
     
     //Politica de seleccion de acciones Softmax
     public Accion softmax (Estado e){
-        
-        return a;
+        Accion a;
+        int longLista = e.acciones.size();
+        float valorTau = ConfTab.getInstance().getTau();
+        float sum = 0;
+        for (int i = 0; i < longLista; i++) {        
+            sum += (float) Math.exp(e.acciones.get(i).getValorQ()/valorTau);
+        }
+        for (int i = 0; i < longLista; i++) {
+            a = e.acciones.get(i);
+            float total = (float) (Math.exp(a.getValorQ()/valorTau)/sum);
+            a.setProb(total);
+        }
+        double rand = numAleat();
+        float limInf = 0;
+        float limSup = 0;
+        int y = 0;
+        for (int i = 0; i < longLista; i++) {
+            a = e.acciones.get(i); 
+            limSup += a.getProb();
+            if (rand > limInf && rand < limSup) {
+                y = i;
+                break;
+            }
+            limInf += a.getProb();
+        }
+        return e.acciones.get(y);
     }
 }
