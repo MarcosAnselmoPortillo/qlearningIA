@@ -56,9 +56,10 @@ public class Estado {
     }
     
     public Accion accionAleatoria (Estado e){
-        int x = new Random().nextInt(e.acciones.size());
+        int x = new Random().nextInt(e.acciones.size()-1);
         Accion accion = e.acciones.get(x);
         return accion;
     }
-        
+    
+    
 }

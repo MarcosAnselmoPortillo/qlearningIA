@@ -159,5 +159,42 @@ public class Matriz {
         estados[i].setRecompensa(rTab);
     }
     
+    public void qLearner(){
+        inicializarEstados();
+        ConfTab tab = new ConfTab();
+        Estado e = new Estado();
+        Random aleat = new Random();
+        Accion a = new Accion();
+        
+        int i = 0;
+        while (i < tab.getEpisodios()){
+            e = estados[aleat.nextInt(tab.getSize()*tab.getSize()-1)];
+            while (e.getRecompensa() != tab.getrFin()){
+                if (e.getRecompensa()== tab.getrPozo()){
+                    break;
+                }
+                a = e.accionAleatoria(e);
+                /*tenemos que ver como evolucionan las recompensas del estado pozo*/
+//                if (a.getDestino().getRecompensa()== tab.getrPozo()){
+//                    a.setValorQ(-1000);
+//                } else {
+//                    a.setValorQ(e.getRecompensa()+e.accionMayorQ(e).getValorQ());    
+//                }
+                a.setValorQ(e.getRecompensa()+e.accionMayorQ(e).getValorQ()); 
+                e = a.getDestino();
+            }
+            i++;
+        }
+    }
     
+        //borra la lista de acciones del estado final y agrega una única accion
+        //con destino a sí mismo y valor Q alto   
+    public void actualizarEstadoFinal(Estado e){
+        e.acciones.clear();
+        Accion a = new Accion();
+        a.setDestino(estados[e.getPosAbs()]);
+        a.setValorQ(1000);
+        e.acciones.add(a);
+        
+    }
 }
