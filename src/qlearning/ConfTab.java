@@ -108,12 +108,19 @@ public class ConfTab {
         this.rFin = rFin;
     }
     
-    public static ConfTab getInstance()
+    public static ConfTab getInstance(int size, float epsilon, float tau, int episodios)
 	{
 		if(instance == null)
-			instance = new ConfTab();
+			instance = new ConfTab(size, epsilon, tau, episodios);
 		
 		return instance;
 	}
+
+    public ConfTab(int size, float epsilon, float tau, int episodios) {
+        this.size = size;
+        this.epsilon = epsilon;
+        this.tau = tau;
+        this.episodios = episodios;
+    }
     
 }
