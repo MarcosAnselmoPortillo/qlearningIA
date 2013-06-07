@@ -8,10 +8,10 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
+//import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.border.Border;
+//import javax.swing.border.Border;
 
 /**
  *
@@ -105,6 +105,11 @@ public class Tablero extends JFrame implements ActionListener {
         jLabel2.setText("Políticas");
 
         btnAleat.setText("Aleatorio");
+        btnAleat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAleatActionPerformed(evt);
+            }
+        });
 
         btnManual.setText("Manual");
 
@@ -219,21 +224,22 @@ public class Tablero extends JFrame implements ActionListener {
 
     
     
-    public void iniciar(){
+    public void iniciar(int size){
         
-        JButton[][] estados = new JButton[6][6];
-        jPanel1.setLayout(new GridLayout(6, 6));
-        Border blackline;
-        blackline = BorderFactory.createLineBorder(Color.black);
-        for (int i = 0; i < 6; i++) {
+        JButton[][] estados = new JButton[size][size];
+        jPanel1.setVisible(false);
+        jPanel1.removeAll();
+        jPanel1.setLayout(new GridLayout(size, size));
+//        Border blackline;
+//        blackline = BorderFactory.createLineBorder(Color.black);
+        for (int i = 0; i < size; i++) {
             
-            for (int j = 0; j < 6; j++) {
+            for (int j = 0; j < size; j++) {
                 
                 JButton temp = new JButton();
-                temp.setBackground(Color.WHITE);
-                temp.setBorder(blackline);
-                temp.setBorderPainted(true);
-                temp.setText( "("+ i +" , "+ j +")" );
+                temp.setBackground(Color.white);
+                //temp.setBorder(blackline);
+                
                 //agregar el boton al panel
                 jPanel1.add(temp);
                 //agregar el boton al arreglo
@@ -258,6 +264,10 @@ public class Tablero extends JFrame implements ActionListener {
         textTau.requestFocusInWindow();
         textEpsilon.setEnabled(false);
     }//GEN-LAST:event_radioSoftActionPerformed
+
+    private void btnAleatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAleatActionPerformed
+        iniciar(size);//Completar el paso de parametro con el tamaño de tablero
+    }//GEN-LAST:event_btnAleatActionPerformed
 
 //    private void configDePantalla (){
 //        ConfTab config = new ConfTab();
