@@ -4,9 +4,14 @@
  */
 package qlearning;
 
+import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.border.Border;
 
 /**
  *
@@ -104,11 +109,6 @@ public class Tablero extends JFrame implements ActionListener {
         btnManual.setText("Manual");
 
         btnAprende.setText("Aprender");
-        btnAprende.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAprendeActionPerformed(evt);
-            }
-        });
 
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -217,6 +217,32 @@ public class Tablero extends JFrame implements ActionListener {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
+    public void iniciar(){
+        
+        JButton[][] estados = new JButton[6][6];
+        jPanel1.setLayout(new GridLayout(6, 6));
+        Border blackline;
+        blackline = BorderFactory.createLineBorder(Color.black);
+        for (int i = 0; i < 6; i++) {
+            
+            for (int j = 0; j < 6; j++) {
+                
+                JButton temp = new JButton();
+                temp.setBackground(Color.WHITE);
+                temp.setBorder(blackline);
+                temp.setBorderPainted(true);
+                temp.setText( "("+ i +" , "+ j +")" );
+                //agregar el boton al panel
+                jPanel1.add(temp);
+                //agregar el boton al arreglo
+                estados[i][j] = temp;
+            }
+        }
+        jPanel1.setVisible(true);
+    }
+    
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
@@ -233,28 +259,24 @@ public class Tablero extends JFrame implements ActionListener {
         textEpsilon.setEnabled(false);
     }//GEN-LAST:event_radioSoftActionPerformed
 
-    private void btnAprendeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAprendeActionPerformed
-        
-    }//GEN-LAST:event_btnAprendeActionPerformed
-
-    private void configDePantalla (){
-        ConfTab config = new ConfTab();
-        int size= 0;
-        String aux = (String)comboSize.getSelectedItem();
-        switch(aux){
-            case "6x6":size= 6;
-                break;
-            case "7x7":size= 7;
-                break;
-            case "8x8":size= 8;
-                break;
-            case "9x9":size= 9;
-                break;
-            case "10x10":size=10;
-                break;
-        }    
-        config.setSize(size);
-    }
+//    private void configDePantalla (){
+//        ConfTab config = new ConfTab();
+//        int size= 0;
+//        String aux = (String)comboSize.getSelectedItem();
+//        switch(aux){
+//            case "6x6":size= 6;
+//                break;
+//            case "7x7":size= 7;
+//                break;
+//            case "8x8":size= 8;
+//                break;
+//            case "9x9":size= 9;
+//                break;
+//            case "10x10":size=10;
+//                break;
+//        }    
+//        config.setSize(size);
+//    }
     /**
      * @param args the command line arguments
      */
