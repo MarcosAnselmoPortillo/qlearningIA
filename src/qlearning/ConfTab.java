@@ -26,7 +26,7 @@ public class ConfTab {
     
     public float rFin; //Valor de la recompensa asociada al estado Final
     
-    public static ConfTab instance = null;
+    //public static ConfTab instance = null;
 
     public int getSize() {
         return size;
@@ -108,19 +108,19 @@ public class ConfTab {
         this.rFin = rFin;
     }
     
-    public static ConfTab getInstance(int size, float epsilon, float tau, int episodios)
-	{
-		if(instance == null)
-			instance = new ConfTab(size, epsilon, tau, episodios);
-		
-		return instance;
-	}
-
-    public ConfTab(int size, float epsilon, float tau, int episodios) {
-        this.size = size;
-        this.epsilon = epsilon;
-        this.tau = tau;
-        this.episodios = episodios;
-    }
+//    public static ConfTab getInstance(int size, float epsilon, float tau, int episodios)
+//	{
+//		if(instance == null)
+//			instance = new ConfTab(size, epsilon, tau, episodios);
+//		
+//		return instance;
+//	}
+//
+//    public ConfTab(int size, float epsilon, float tau, int episodios) {
+//        this.size = size;
+//        this.epsilon = epsilon;
+//        this.tau = tau;
+//        this.episodios = episodios;
+//    }
     
 }

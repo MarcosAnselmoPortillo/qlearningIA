@@ -141,7 +141,7 @@ public class Tablero extends JFrame implements ActionListener {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addGap(22, 22, 22)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,12 +172,12 @@ public class Tablero extends JFrame implements ActionListener {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(textEpsilon, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(textTau, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addGap(111, 111, 111))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(84, 84, 84)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(76, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
@@ -212,8 +212,8 @@ public class Tablero extends JFrame implements ActionListener {
                             .addComponent(btnAprende)
                             .addComponent(btnSalir))
                         .addGap(21, 21, 21))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(48, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(56, 56, 56))
         );
 
         jPanel1.getAccessibleContext().setAccessibleName("");
@@ -221,11 +221,25 @@ public class Tablero extends JFrame implements ActionListener {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
     
+    //dice que el constructor de ConfTab para que tome los valores de la pantalla
+    public ConfTab instance = null;
+    public ConfTab getInstanceConf (){
+        if(instance == null){
+         instance = new ConfTab();
+         instance.size = sizeDePantalla();
+         if(radioEpsilon.isSelected())
+             instance.epsilon = Float.parseFloat(textEpsilon.getText());
+         else
+             instance.tau = Float.parseFloat(textTau.getText());
+         //de aca en adelante va la parte de conf de recompensas y episodios
+         
+        }
+        return instance;
+    }
     
-    public void iniciar(int size){
-        
+    public void iniciar(){
+        int size = 10;
         JButton[][] estados = new JButton[size][size];
         jPanel1.setVisible(false);
         jPanel1.removeAll();
@@ -266,27 +280,26 @@ public class Tablero extends JFrame implements ActionListener {
     }//GEN-LAST:event_radioSoftActionPerformed
 
     private void btnAleatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAleatActionPerformed
-        iniciar(size);//Completar el paso de parametro con el tamaño de tablero
+        iniciar();//Completar el paso de parametro con el tamaño de tablero
     }//GEN-LAST:event_btnAleatActionPerformed
 
-//    private void configDePantalla (){
-//        ConfTab config = new ConfTab();
-//        int size= 0;
-//        String aux = (String)comboSize.getSelectedItem();
-//        switch(aux){
-//            case "6x6":size= 6;
-//                break;
-//            case "7x7":size= 7;
-//                break;
-//            case "8x8":size= 8;
-//                break;
-//            case "9x9":size= 9;
-//                break;
-//            case "10x10":size=10;
-//                break;
-//        }    
-//        config.setSize(size);
-//    }
+    private int sizeDePantalla (){
+        int size= 0;
+        String aux = (String)comboSize.getSelectedItem();
+        switch(aux){
+            case "6x6":size= 6;
+                break;
+            case "7x7":size= 7;
+                break;
+            case "8x8":size= 8;
+                break;
+            case "9x9":size= 9;
+                break;
+            case "10x10":size=10;
+                break;
+        }    
+        return size;
+    }
     /**
      * @param args the command line arguments
      */
