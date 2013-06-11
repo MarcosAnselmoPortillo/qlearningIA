@@ -159,7 +159,7 @@ public class Matriz {
         estados[i].setRecompensa(rTab);
     }
     
-    public void qLearner(){
+    public void aprendizaje(){
         inicializarEstados();
         ConfTab tab = new ConfTab();
         Estado e = new Estado();
@@ -173,14 +173,8 @@ public class Matriz {
                 if (e.getRecompensa()== tab.getrPozo()){
                     break;
                 }
-                a = e.accionAleatoria(e);
-                /*tenemos que ver como evolucionan las recompensas del estado pozo*/
-//                if (a.getDestino().getRecompensa()== tab.getrPozo()){
-//                    a.setValorQ(-1000);
-//                } else {
-//                    a.setValorQ(e.getRecompensa()+e.accionMayorQ(e).getValorQ());    
-//                }
-                a.setValorQ(e.getRecompensa()+e.accionMayorQ(e).getValorQ()); 
+                a = e.accionAleatoria(e);// esta línea se tiene que cambiar de acuerdo a la política
+                a.setValorQ(e.getRecompensa()+tab.getGamma()*e.accionMayorQ(e).getValorQ()); 
                 e = a.getDestino();
             }
             i++;

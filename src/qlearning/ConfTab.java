@@ -26,6 +26,8 @@ public class ConfTab {
     
     public float rFin; //Valor de la recompensa asociada al estado Final
     
+    public float gamma; // Valor de gamma 
+
     //public static ConfTab instance = null;
 
     public int getSize() {
@@ -107,6 +109,15 @@ public class ConfTab {
     public void setrFin(float rFin) {
         this.rFin = rFin;
     }
+    
+    public float getGamma() {
+        return gamma;
+    }
+
+    public void setGamma(float gamma) {
+        this.gamma = gamma;
+    }
+    
     
 //    public static ConfTab getInstance(int size, float epsilon, float tau, int episodios)
 //	{
