@@ -191,4 +191,17 @@ public class Matriz {
         e.acciones.add(a);
         
     }
+    
+    //escribir la matriz R
+    public void testMatrizR(){
+        System.out.println("Matriz R");
+	ConfTab tab = new ConfTab(); // siempre tengo que crear una instancia de ConfTab???
+        int lado = tab.getSize();
+	for(int y = 0; y < lado; y++) {
+		for(int x = 0; x < lado; x++)
+			System.out.format("%05d ", estados[x*lado + y].getRecompensa());
+			
+		System.out.println();
+		}
+    }
 }
