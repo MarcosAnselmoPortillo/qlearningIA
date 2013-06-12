@@ -24,19 +24,7 @@ public class Tablero extends JFrame implements ActionListener {
      */
     public Tablero() {
         initComponents();
-        
-        jPanel2.setVisible(false);
-     
-//        lblMalo.setVisible(false);
-//        lblBueno.setVisible(false);
-//        lblExc.setVisible(false);
-//        lblPozo.setVisible(false);
-//        lblFinal.setVisible(false);
-//        textMalo.setVisible(false);
-//        textBueno.setVisible(false);
-//        textExc.setVisible(false);
-//        textPozo.setVisible(false);
-//        textFinal.setVisible(false);
+        jPanel1.setSize(290, 290);
         
     }
 
@@ -92,11 +80,11 @@ public class Tablero extends JFrame implements ActionListener {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 216, Short.MAX_VALUE)
+            .addGap(0, 288, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 287, Short.MAX_VALUE)
+            .addGap(0, 288, Short.MAX_VALUE)
         );
 
         comboTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Malo", "Bueno", "Excelente", "Pozo" }));
@@ -191,7 +179,7 @@ public class Tablero extends JFrame implements ActionListener {
                         .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(203, 203, 203))
+                .addGap(131, 131, 131))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,7 +217,7 @@ public class Tablero extends JFrame implements ActionListener {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAprende)
                             .addComponent(btnSalir))))
-                .addGap(32, 32, 32))
+                .addGap(31, 31, 31))
         );
 
         jPanel1.getAccessibleContext().setAccessibleName("");
@@ -255,7 +243,8 @@ public class Tablero extends JFrame implements ActionListener {
     }
     
     public void iniciar(){
-        int size = 10;
+        instance = getInstanceConf();
+        int size = instance.size;
         JButton[][] estados = new JButton[size][size];
         jPanel1.setVisible(false);
         jPanel1.removeAll();
