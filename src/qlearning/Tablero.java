@@ -28,6 +28,7 @@ public class Tablero extends JFrame implements ActionListener {
         
     }
     
+    public static String letra = null;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,20 +75,25 @@ public class Tablero extends JFrame implements ActionListener {
         setMinimumSize(new java.awt.Dimension(730, 350));
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(102, 102, 255)));
+        jPanel1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), javax.swing.BorderFactory.createEtchedBorder()));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 288, Short.MAX_VALUE)
+            .addGap(0, 284, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 288, Short.MAX_VALUE)
+            .addGap(0, 284, Short.MAX_VALUE)
         );
 
-        comboTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Malo", "Bueno", "Excelente", "Pozo" }));
+        comboTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Malo", "Bueno", "Excelente", "Pozo", "Inicial", "Final" }));
+        comboTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboTipoActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Tipo de Estado");
 
@@ -131,6 +137,11 @@ public class Tablero extends JFrame implements ActionListener {
         jLabel6.setText("Tamaño");
 
         comboSize.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "6x6", "7x7", "8x8", "9x9", "10x10" }));
+        comboSize.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboSizeActionPerformed(evt);
+            }
+        });
 
         btnAprende.setText("Aprender");
 
@@ -178,7 +189,7 @@ public class Tablero extends JFrame implements ActionListener {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(131, 131, 131))
         );
         layout.setVerticalGroup(
@@ -186,7 +197,7 @@ public class Tablero extends JFrame implements ActionListener {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -226,7 +237,7 @@ public class Tablero extends JFrame implements ActionListener {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    private void valoresDePantalla (){
+    private void sizeDePantalla (){
         int size= 0;
         String aux = (String)comboSize.getSelectedItem();
         switch(aux){
@@ -243,14 +254,18 @@ public class Tablero extends JFrame implements ActionListener {
         }    
         ConfTab.setSize(size);
         
-        if(radioEpsilon.isSelected())
+    }
+    
+    public void politicaElegida(){
+         if(radioEpsilon.isSelected())
             ConfTab.setEpsilon(Float.parseFloat(textEpsilon.getText()));
         else
             ConfTab.setTau(Float.parseFloat(textTau.getText()));
     }
     
+    //Pinta un tablero con el tamaño elegido y todos los estados neutro
     public void iniciar(){
-        valoresDePantalla();
+        sizeDePantalla();
         int size = ConfTab.size;
         JButton[][] estados = new JButton[size][size];
         jPanel1.setVisible(false);
@@ -264,6 +279,7 @@ public class Tablero extends JFrame implements ActionListener {
                 
                 JButton temp = new JButton();
                 temp.setBackground(Color.white);
+                temp.setSize(290/size, 290/size);
                 //temp.setBorder(blackline);
                 
                 //agregar el boton al panel
@@ -275,6 +291,9 @@ public class Tablero extends JFrame implements ActionListener {
         jPanel1.setVisible(true);
     }
     
+    public void aleatorio(){
+        
+    }    
     
     
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -284,18 +303,42 @@ public class Tablero extends JFrame implements ActionListener {
     private void radioEpsilonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioEpsilonActionPerformed
         textEpsilon.setEnabled(true);
         textEpsilon.requestFocusInWindow();
+        textTau.setText(null);
         textTau.setEnabled(false);
     }//GEN-LAST:event_radioEpsilonActionPerformed
 
     private void radioSoftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioSoftActionPerformed
         textTau.setEnabled(true);
         textTau.requestFocusInWindow();
+        textEpsilon.setText(null);
         textEpsilon.setEnabled(false);
     }//GEN-LAST:event_radioSoftActionPerformed
 
     private void btnAleatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAleatActionPerformed
-        iniciar();//Completar el paso de parametro con el tamaño de tablero
+        aleatorio();//Completar el paso de parametro con el tamaño de tablero
     }//GEN-LAST:event_btnAleatActionPerformed
+
+    private void comboSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSizeActionPerformed
+        iniciar();
+    }//GEN-LAST:event_comboSizeActionPerformed
+
+    private void comboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoActionPerformed
+        String aux = (String) comboTipo.getSelectedItem();
+        switch(aux){
+            case "Malo":letra = "M";
+                break;
+            case "Bueno":letra = "B";
+                break;
+            case "Excelente":letra = "E";
+                break;
+            case "Pozo":letra = "P";
+                break;
+            case "Inicial":letra = "I";
+                break;
+            case "Final":letra = "F";
+                break;
+        }    
+    }//GEN-LAST:event_comboTipoActionPerformed
 
     /**
      * @param args the command line arguments
