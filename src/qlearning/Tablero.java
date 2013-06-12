@@ -27,7 +27,7 @@ public class Tablero extends JFrame implements ActionListener {
         jPanel1.setSize(290, 290);
         
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -226,25 +226,32 @@ public class Tablero extends JFrame implements ActionListener {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    //dice que el constructor de ConfTab para que tome los valores de la pantalla
-    public ConfTab instance = null;
-    public ConfTab getInstanceConf (){
-        if(instance == null){
-         instance = new ConfTab();
-         instance.size = sizeDePantalla();
-         if(radioEpsilon.isSelected())
-             instance.epsilon = Float.parseFloat(textEpsilon.getText());
-         else
-             instance.tau = Float.parseFloat(textTau.getText());
-         //de aca en adelante va la parte de conf de recompensas y episodios
-         
-        }
-        return instance;
+    private void valoresDePantalla (){
+        int size= 0;
+        String aux = (String)comboSize.getSelectedItem();
+        switch(aux){
+            case "6x6":size= 6;
+                break;
+            case "7x7":size= 7;
+                break;
+            case "8x8":size= 8;
+                break;
+            case "9x9":size= 9;
+                break;
+            case "10x10":size=10;
+                break;
+        }    
+        ConfTab.setSize(size);
+        
+        if(radioEpsilon.isSelected())
+            ConfTab.setEpsilon(Float.parseFloat(textEpsilon.getText()));
+        else
+            ConfTab.setTau(Float.parseFloat(textTau.getText()));
     }
     
     public void iniciar(){
-        instance = getInstanceConf();
-        int size = instance.size;
+        valoresDePantalla();
+        int size = ConfTab.size;
         JButton[][] estados = new JButton[size][size];
         jPanel1.setVisible(false);
         jPanel1.removeAll();
@@ -290,23 +297,6 @@ public class Tablero extends JFrame implements ActionListener {
         iniciar();//Completar el paso de parametro con el tamaño de tablero
     }//GEN-LAST:event_btnAleatActionPerformed
 
-    private int sizeDePantalla (){
-        int size= 0;
-        String aux = (String)comboSize.getSelectedItem();
-        switch(aux){
-            case "6x6":size= 6;
-                break;
-            case "7x7":size= 7;
-                break;
-            case "8x8":size= 8;
-                break;
-            case "9x9":size= 9;
-                break;
-            case "10x10":size=10;
-                break;
-        }    
-        return size;
-    }
     /**
      * @param args the command line arguments
      */

@@ -23,13 +23,12 @@ public class Matriz {
     * para despues poder cambiar a mano los necesarios
     */
     public void inicializarEstados(){
-        ConfTab x = new ConfTab ();
         int lado;
-        lado = x.getSize();
+        lado = ConfTab.getSize();
         // Poner todos los estados a nuetro
         for (int i = 0; i < lado*lado; i++) {
             Estado e = new Estado();
-            e.setRecompensa(x.getrNeutro());
+            e.setRecompensa(ConfTab.getrNeutro());
             e.setPosAbs(i);
             //inicializando la lista de acciones posibles
             int posY = i/lado;
@@ -111,30 +110,29 @@ public class Matriz {
      }
     
     public void estadosAleat(){
-         ConfTab x = new ConfTab();
          int lado;
-         lado = x.getSize();
+         lado = ConfTab.getSize();
          Random aleat = new Random();
          for (int i = 0; i < lado*lado; i++) {
              Estado e= new Estado();
              e.setPosAbs(i);
              float numale = aleat.nextFloat();
              if (numale<0.2) {
-                 e.setRecompensa(x.getrMalo());
+                 e.setRecompensa(ConfTab.getrMalo());
                  
                 } else {
                  if (numale < 0.4){
-                     e.setRecompensa(x.getrPozo());
+                     e.setRecompensa(ConfTab.getrPozo());
                      
                  } else {
                      if (numale < 0.6){
-                         e.setRecompensa(x.getrNeutro());
+                         e.setRecompensa(ConfTab.getrNeutro());
                      } else {
                          if (numale < 0.75){
-                             e.setRecompensa(x.getrBueno());
+                             e.setRecompensa(ConfTab.getrBueno());
                          } else {
                              if (numale < 1){
-                                 e.setRecompensa(x.getrExc());
+                                 e.setRecompensa(ConfTab.getrExc());
                              }
                          }
                      }
@@ -152,29 +150,27 @@ public class Matriz {
     
     public void estadosManuales(float rTab, int x, int y){
         int i;
-        ConfTab tab = new ConfTab();
         int lado;
-        lado = tab.getSize();
+        lado = ConfTab.getSize();
         i=x*lado+y;
         estados[i].setRecompensa(rTab);
     }
     
     public void aprendizaje(){
         inicializarEstados();
-        ConfTab tab = new ConfTab();
         Estado e = new Estado();
         Random aleat = new Random();
         Accion a = new Accion();
         
         int i = 0;
-        while (i < tab.getEpisodios()){
-            e = estados[aleat.nextInt(tab.getSize()*tab.getSize()-1)];
-            while (e.getRecompensa() != tab.getrFin()){
-                if (e.getRecompensa()== tab.getrPozo()){
+        while (i < ConfTab.getEpisodios()){
+            e = estados[aleat.nextInt(ConfTab.getSize()*ConfTab.getSize()-1)];
+            while (e.getRecompensa() != ConfTab.getrFin()){
+                if (e.getRecompensa()== ConfTab.getrPozo()){
                     break;
                 }
                 a = e.accionAleatoria(e);// esta línea se tiene que cambiar de acuerdo a la política
-                a.setValorQ(e.getRecompensa()+tab.getGamma()*e.accionMayorQ(e).getValorQ()); 
+                a.setValorQ(e.getRecompensa()+ConfTab.getGamma()*e.accionMayorQ(e).getValorQ()); 
                 e = a.getDestino();
             }
             i++;
@@ -195,8 +191,7 @@ public class Matriz {
     //escribir la matriz R
     public void testMatrizR(){
         System.out.println("Matriz R");
-	ConfTab tab = new ConfTab(); // siempre tengo que crear una instancia de ConfTab???
-        int lado = tab.getSize();
+        int lado = ConfTab.getSize();
 	for(int y = 0; y < lado; y++) {
 		for(int x = 0; x < lado; x++)
 			System.out.format("%05d ", estados[x*lado + y].getRecompensa());

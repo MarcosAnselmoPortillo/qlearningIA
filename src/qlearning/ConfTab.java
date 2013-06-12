@@ -6,132 +6,115 @@ package qlearning;
  */
 public class ConfTab {
     
-    public int size; //Tamaño del tablero
+    public static int size; //Tamaño del tablero
     
-    public float epsilon; //Valor de epsilon
+    public static float epsilon; //Valor de epsilon
     
-    public float tau; //Valor de temperatura
+    public static float tau; //Valor de temperatura
     
-    public int episodios; //Cantidad de episodios
+    private static int episodios = 10000; //Cantidad de episodios
         
-    public float rPozo; //Valor de la recompensa asociada a pozo
+    private static float rPozo = -1000; //Valor de la recompensa asociada a pozo
     
-    public float rNeutro; //Valor de la recompensa asociada a un casillero neutro
+    private static float rNeutro = 0; //Valor de la recompensa asociada a un casillero neutro
     
-    public float rMalo; //Valor de la recompensa asociada a malo
+    private static float rMalo = 10; //Valor de la recompensa asociada a malo
     
-    public float rBueno; //Valor de la recompensa asociada a bueno
+    private static float rBueno = 50; //Valor de la recompensa asociada a bueno
     
-    public float rExc; //Valor de la recompensa asociada a excelente
+    private static float rExc = 100; //Valor de la recompensa asociada a excelente
     
-    public float rFin; //Valor de la recompensa asociada al estado Final
+    private static float rFin = 1000; //Valor de la recompensa asociada al estado Final
     
-    public float gamma; // Valor de gamma 
+    public static float gamma; // Valor de gamma 
 
-    //public static ConfTab instance = null;
-
-    public int getSize() {
+    
+    public static int getSize() {
         return size;
     }
 
-    public void setSize(int size) {
-        this.size = size;
+    public static void setSize(int size) {
+        ConfTab.size = size;
     }
 
-    public float getEpsilon() {
+    public static float getEpsilon() {
         return epsilon;
     }
 
-    public void setEpsilon(float epsilon) {
-        this.epsilon = epsilon;
+    public static void setEpsilon(float epsilon) {
+        ConfTab.epsilon = epsilon;
     }
 
-    public float getTau() {
+    public static float getTau() {
         return tau;
     }
 
-    public void setTau(float tau) {
-        this.tau = tau;
+    public static void setTau(float tau) {
+        ConfTab.tau = tau;
     }
 
-    public int getEpisodios() {
+    public static int getEpisodios() {
         return episodios;
     }
 
-    public void setEpisodios(int episodios) {
-        this.episodios = episodios;
+    public static void setEpisodios(int episodios) {
+        ConfTab.episodios = episodios;
     }
 
-    public float getrPozo() {
+    public static float getrPozo() {
         return rPozo;
     }
 
-    public void setrPozo(float rPozo) {
-        this.rPozo = rPozo;
+    public static void setrPozo(float rPozo) {
+        ConfTab.rPozo = rPozo;
     }
 
-    public float getrNeutro() {
+    public static float getrNeutro() {
         return rNeutro;
     }
 
-    public void setrNeutro(float rNeutro) {
-        this.rNeutro = rNeutro;
+    public static void setrNeutro(float rNeutro) {
+        ConfTab.rNeutro = rNeutro;
     }
-    
-    public float getrMalo() {
+
+    public static float getrMalo() {
         return rMalo;
     }
 
-    public void setrMalo(float rMalo) {
-        this.rMalo = rMalo;
+    public static void setrMalo(float rMalo) {
+        ConfTab.rMalo = rMalo;
     }
 
-    public float getrBueno() {
+    public static float getrBueno() {
         return rBueno;
     }
 
-    public void setrBueno(float rBueno) {
-        this.rBueno = rBueno;
+    public static void setrBueno(float rBueno) {
+        ConfTab.rBueno = rBueno;
     }
 
-    public float getrExc() {
+    public static float getrExc() {
         return rExc;
     }
 
-    public void setrExc(float rExc) {
-        this.rExc = rExc;
+    public static void setrExc(float rExc) {
+        ConfTab.rExc = rExc;
     }
 
-    public float getrFin() {
+    public static float getrFin() {
         return rFin;
     }
 
-    public void setrFin(float rFin) {
-        this.rFin = rFin;
+    public static void setrFin(float rFin) {
+        ConfTab.rFin = rFin;
     }
-    
-    public float getGamma() {
+
+    public static float getGamma() {
         return gamma;
     }
 
-    public void setGamma(float gamma) {
-        this.gamma = gamma;
+    public static void setGamma(float gamma) {
+        ConfTab.gamma = gamma;
     }
-    
-    
-//    public static ConfTab getInstance(int size, float epsilon, float tau, int episodios)
-//	{
-//		if(instance == null)
-//			instance = new ConfTab(size, epsilon, tau, episodios);
-//		
-//		return instance;
-//	}
-//
-//    public ConfTab(int size, float epsilon, float tau, int episodios) {
-//        this.size = size;
-//        this.epsilon = epsilon;
-//        this.tau = tau;
-//        this.episodios = episodios;
-//    }
     
 }
