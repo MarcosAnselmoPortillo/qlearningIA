@@ -29,6 +29,7 @@ public class Tablero extends JFrame implements ActionListener {
     }
     
     public static String letra = null;
+    public static Color fondo = Color.WHITE;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,7 +49,6 @@ public class Tablero extends JFrame implements ActionListener {
         radioSoft = new javax.swing.JRadioButton();
         jLabel2 = new javax.swing.JLabel();
         btnAleat = new javax.swing.JButton();
-        btnManual = new javax.swing.JButton();
         textTau = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -122,8 +122,6 @@ public class Tablero extends JFrame implements ActionListener {
             }
         });
 
-        btnManual.setText("Manual");
-
         textTau.setToolTipText("");
         textTau.setEnabled(false);
 
@@ -165,11 +163,8 @@ public class Tablero extends JFrame implements ActionListener {
                     .addComponent(jLabel1)
                     .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(btnAleat)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnManual, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnAleat, javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
@@ -181,8 +176,8 @@ public class Tablero extends JFrame implements ActionListener {
                                     .addGap(10, 10, 10)
                                     .addComponent(jLabel3)))
                             .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(textTau)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(textTau, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                                 .addComponent(textEpsilon))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAprende)
@@ -205,9 +200,7 @@ public class Tablero extends JFrame implements ActionListener {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAleat)
-                            .addComponent(btnManual))
+                        .addComponent(btnAleat)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -277,9 +270,17 @@ public class Tablero extends JFrame implements ActionListener {
             
             for (int j = 0; j < size; j++) {
                 
-                JButton temp = new JButton();
+                final JButton temp = new JButton();
                 temp.setBackground(Color.white);
                 temp.setSize(290/size, 290/size);
+                temp.addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        temp.setText(letra);
+                        temp.setBackground(fondo);
+                    }
+                });
                 //temp.setBorder(blackline);
                 
                 //agregar el boton al panel
@@ -325,17 +326,35 @@ public class Tablero extends JFrame implements ActionListener {
     private void comboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoActionPerformed
         String aux = (String) comboTipo.getSelectedItem();
         switch(aux){
-            case "Malo":letra = "M";
+            case "Malo":{
+                letra = "M";
+                fondo = Color.LIGHT_GRAY;
+            }
                 break;
-            case "Bueno":letra = "B";
+            case "Bueno":{
+                letra = "B";
+                fondo = Color.MAGENTA;
+            }
                 break;
-            case "Excelente":letra = "E";
+            case "Excelente":{
+                letra = "E";
+                fondo = Color.BLUE;
+            }
                 break;
-            case "Pozo":letra = "P";
+            case "Pozo":{
+                letra = "P";
+                fondo = Color.RED;
+            }
                 break;
-            case "Inicial":letra = "I";
+            case "Inicial":{
+                letra = "Inicial";
+                fondo = Color.WHITE;
+            }
                 break;
-            case "Final":letra = "F";
+            case "Final":{
+                letra = "Final";
+                fondo = Color.WHITE;
+            }
                 break;
         }    
     }//GEN-LAST:event_comboTipoActionPerformed
@@ -377,7 +396,6 @@ public class Tablero extends JFrame implements ActionListener {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAleat;
     private javax.swing.JButton btnAprende;
-    private javax.swing.JButton btnManual;
     private javax.swing.JButton btnSalir;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
