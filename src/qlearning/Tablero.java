@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 //import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,6 +31,11 @@ public class Tablero extends JFrame implements ActionListener {
     
     public static String letra = null;
     public static Color fondo = Color.WHITE;
+    public static Color colMalo = new Color(50, 200, 0);
+    public static Color colBueno = new Color(100, 100, 100);
+    public static Color colExc = new Color(150, 150, 150);
+    public static Color colPozo = new Color(0, 0, 0);
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -264,8 +270,6 @@ public class Tablero extends JFrame implements ActionListener {
         jPanel1.setVisible(false);
         jPanel1.removeAll();
         jPanel1.setLayout(new GridLayout(size, size));
-//        Border blackline;
-//        blackline = BorderFactory.createLineBorder(Color.black);
         for (int i = 0; i < size; i++) {
             
             for (int j = 0; j < size; j++) {
@@ -281,20 +285,36 @@ public class Tablero extends JFrame implements ActionListener {
                         temp.setBackground(fondo);
                     }
                 });
-                //temp.setBorder(blackline);
                 
                 //agregar el boton al panel
                 jPanel1.add(temp);
                 //agregar el boton al arreglo
+//                int fila = i*5;
+//                int col = j+i;
+//                estados[fila+col] = temp;
                 estados[i][j] = temp;
             }
         }
         jPanel1.setVisible(true);
     }
     
-    public void aleatorio(){
-        
-    }    
+//    public void aleatorio(){
+//        
+//        int size = ConfTab.getSize();
+//        for (int i = 0; i < size*size; i++) {
+//            float x = new Random().nextFloat();
+//            if (x < 0.2) {
+//                estados[i].setText("M");
+//                estados[i].setBackground(Color.LIGHT_GRAY);
+//            } else {
+//                if (x < 0.4) {
+//                    estados[i].setText("B");
+//                    estados[i].setBackground(Color.MAGENTA);
+//                } else {
+//                }
+//            }
+//        }
+//    }    
     
     
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -316,7 +336,7 @@ public class Tablero extends JFrame implements ActionListener {
     }//GEN-LAST:event_radioSoftActionPerformed
 
     private void btnAleatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAleatActionPerformed
-        aleatorio();//Completar el paso de parametro con el tamaño de tablero
+        //aleatorio();//Completar el paso de parametro con el tamaño de tablero
     }//GEN-LAST:event_btnAleatActionPerformed
 
     private void comboSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSizeActionPerformed
@@ -328,22 +348,22 @@ public class Tablero extends JFrame implements ActionListener {
         switch(aux){
             case "Malo":{
                 letra = "M";
-                fondo = Color.LIGHT_GRAY;
+                fondo = colMalo;
             }
                 break;
             case "Bueno":{
                 letra = "B";
-                fondo = Color.MAGENTA;
+                fondo = colBueno;
             }
                 break;
             case "Excelente":{
                 letra = "E";
-                fondo = Color.BLUE;
+                fondo = colExc;
             }
                 break;
             case "Pozo":{
                 letra = "P";
-                fondo = Color.RED;
+                fondo = colPozo;
             }
                 break;
             case "Inicial":{
