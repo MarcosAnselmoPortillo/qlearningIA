@@ -11,7 +11,7 @@ public class Estado {
     
     public float recompensa; //Valor de recompensa para el estado
     
-    public ArrayList<Accion> acciones; //lista de acciones válidas
+    public ArrayList<Accion> acciones = new ArrayList(); //lista de acciones válidas
     
     public int posAbs;  //posicion absoluta del estado en la matriz
 
@@ -56,7 +56,9 @@ public class Estado {
     }
     
     public Accion accionAleatoria (Estado e){
-        int x = new Random().nextInt(e.acciones.size()-1);
+        int size = e.acciones.size();
+        int x = new Random().nextInt(size-1);
+        //int x = 1;
         Accion accion = e.acciones.get(x);
         return accion;
     }

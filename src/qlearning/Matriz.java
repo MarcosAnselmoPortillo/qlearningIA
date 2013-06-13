@@ -16,13 +16,15 @@ public class Matriz {
      * lo q tengo q ver es como definir que los elementos 
      * sean solo de tipo Estado
      */
-    public Estado estados[]; //Arreglo de elementos tipo Estado  
+    // hay que ver como se lo inicializa..
+    public static Estado[] estados = new Estado[9]; //Arreglo de elementos tipo Estado  
     
     /**
     * Se inicializan todos los estados a neutro
     * para despues poder cambiar a mano los necesarios
     */
-    public void inicializarEstados(){
+    public static void inicializarEstados(){
+        cargarEstados();
         int lado;
         lado = ConfTab.getSize();
         // Poner todos los estados a nuetro
@@ -109,7 +111,7 @@ public class Matriz {
         }
      }
     
-    public void estadosAleat(){
+    public static void estadosAleat(){
          int lado;
          lado = ConfTab.getSize();
          Random aleat = new Random();
@@ -156,22 +158,27 @@ public class Matriz {
         estados[i].setRecompensa(rTab);
     }
     
-    public void aprendizaje(){
+    public static void aprendizaje(){
         inicializarEstados();
         Estado e = new Estado();
         Random aleat = new Random();
         Accion a = new Accion();
-        
+        Politica p = new Politica();
         int i = 0;
         while (i < ConfTab.getEpisodios()){
-            e = estados[aleat.nextInt(ConfTab.getSize()*ConfTab.getSize()-1)];
+            int indice = ConfTab.getSize()*ConfTab.getSize();
+            e = estados[aleat.nextInt(indice - 1)];
             while (e.getRecompensa() != ConfTab.getrFin()){
                 if (e.getRecompensa()== ConfTab.getrPozo()){
                     break;
                 }
-                a = e.accionAleatoria(e);// esta línea se tiene que cambiar de acuerdo a la política
+                //a = e.accionAleatoria(e);// esta línea se tiene que cambiar de acuerdo a la política
+                a = p.eGreedy(e); // esta acción o la aleatoria es la que esta teniendo problemas
                 a.setValorQ(e.getRecompensa()+ConfTab.getGamma()*e.accionMayorQ(e).getValorQ()); 
+                System.out.println(a.getValorQ());
+                System.out.println(a.getDestino());
                 e = a.getDestino();
+                System.out.println("Recompensa " + e.getRecompensa());
             }
             i++;
         }
@@ -189,14 +196,34 @@ public class Matriz {
     }
     
     //escribir la matriz R
-    public void testMatrizR(){
+    public static void testMatrizR(){
         System.out.println("Matriz R");
         int lado = ConfTab.getSize();
 	for(int y = 0; y < lado; y++) {
 		for(int x = 0; x < lado; x++)
-			System.out.format("%05d ", estados[x*lado + y].getRecompensa());
+			//System.out.format("%05d ", estados[x*lado + y].getRecompensa());
+                        System.out.print(estados[x*lado + y].getRecompensa()+ "");
 			
 		System.out.println();
 		}
+    }
+    
+    public static void main (String[] args){
+        //ConfTab x = new ConfTab();
+        ConfTab.setSize(3);
+        //inicializarEstados();
+        estadosAleat();
+        ConfTab.setEpsilon((float)0.2);
+        aprendizaje();
+        testMatrizR();
+    }
+    
+    public static void cargarEstados(){
+        for (int i = 0;i<estados.length;i++){
+            Estado e = new Estado();
+            //e.setPosAbs(i);
+            e.setRecompensa(0);
+            estados[i]= e;
+        }
     }
 }
