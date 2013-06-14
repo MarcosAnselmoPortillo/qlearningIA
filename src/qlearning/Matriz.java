@@ -17,7 +17,7 @@ public class Matriz {
      * sean solo de tipo Estado
      */
     // hay que ver como se lo inicializa..
-    public static Estado[] estados = new Estado[9]; //Arreglo de elementos tipo Estado  
+    public static Estado[] estados; //Arreglo de elementos tipo Estado  
     
     /**
     * Se inicializan todos los estados a neutro
@@ -226,6 +226,7 @@ public class Matriz {
 //    }
     
     public static void cargarEstados(){
+        estados = new Estado[ConfTab.getSize()*ConfTab.getSize()];
         for (int i = 0;i<estados.length;i++){
             Estado e = new Estado();
             //e.setPosAbs(i);

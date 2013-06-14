@@ -296,10 +296,12 @@ public class Tablero extends JFrame implements ActionListener {
     }
     
     public void politicaElegida(){
-         if(radioEpsilon.isSelected())
-            ConfTab.setEpsilon(Float.parseFloat(textEpsilon.getText()));
-        else
-            ConfTab.setTau(Float.parseFloat(textTau.getText()));
+         if(radioEpsilon.isSelected()){
+             ConfTab.setEpsilon(Float.parseFloat(textEpsilon.getText()));
+         }
+         else{
+             ConfTab.setTau(Float.parseFloat(textTau.getText()));
+         }
     }
     
     //Pinta un tablero con el tamaño elegido y todos los estados neutro
@@ -314,7 +316,7 @@ public class Tablero extends JFrame implements ActionListener {
         for (int i = 0; i < (size*size); i++) {
                             
             final JButton temp = new JButton();
-            temp.setBackground(Color.white);
+            temp.setBackground(Color.WHITE);
             temp.setSize(290/size, 290/size);
             temp.addActionListener(new ActionListener() {
 
@@ -398,7 +400,7 @@ public class Tablero extends JFrame implements ActionListener {
             }
         }
     }
-    
+      
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
@@ -430,8 +432,10 @@ public class Tablero extends JFrame implements ActionListener {
     }//GEN-LAST:event_comboTipoActionPerformed
 
     private void btnAprendeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAprendeActionPerformed
+        politicaElegida();
         Matriz.inicializarEstados();
         matrizR();
+                
     }//GEN-LAST:event_btnAprendeActionPerformed
 
     /**
