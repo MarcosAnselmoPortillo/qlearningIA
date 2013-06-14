@@ -39,27 +39,30 @@ public class Estado {
         this.recompensa = recompensa;
     }
     
-    public Accion accionMayorQ(Estado e){
-        int longLista = acciones.size();
-//        Estado eMayorQ = e.acciones.get(0).destino;
-        Accion aMayorQ = new Accion();
-        if (longLista >0){ // pude pasar que la lista de estados esté vacía??
-            float valorQresg = acciones.get(0).valorQ;
-            for (int i = 0 ; i < longLista;i++){
-                if (acciones.get(i).valorQ > valorQresg){
+    public Accion accionMayorQ(){
+        int longLista = this.acciones.size();
+        //Estado eMayorQ = e.acciones.get(0).destino;
+        Accion aMayorQ = this.getAcciones().get(0);
+        float valorQresg = acciones.get(0).valorQ;
+        for (int i = 0 ; i < longLista;i++){
+            if (acciones.get(i).valorQ > valorQresg){
                     aMayorQ = acciones.get(i);
-                }
-            } 
-        }
-               
+            }
+        }        
         return aMayorQ;
     }
     
-    public Accion accionAleatoria (Estado e){
-        int size = e.acciones.size();
-        int x = new Random().nextInt(size-1);
-        //int x = 1;
-        Accion accion = e.acciones.get(x);
+    public Accion accionAleatoria (){
+        Accion accion = new Accion();
+        int size = this.acciones.size();
+        if (size <= 1){
+            accion = this.acciones.get(0);
+        } else {
+            int x = new Random().nextInt(size-1);
+            //int x = 1;
+            accion = this.acciones.get(x);
+        }
+        
         return accion;
     }
     

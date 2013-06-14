@@ -30,9 +30,9 @@ public class Politica {
     public Accion eGreedy (Estado e){
         Accion a;
         if (ConfTab.getEpsilon() < numAleat()) {
-            a = e.accionMayorQ(e);
+            a = e.accionMayorQ();
         } else {
-            a = e.accionAleatoria(e);
+            a = e.accionAleatoria();
         }
         return a;
     }
