@@ -26,7 +26,7 @@ public class ConfTab {
     
     private static float rFin = 1000; //Valor de la recompensa asociada al estado Final
     
-    public static float gamma; // Valor de gamma 
+    public static float gamma = (float) 0.8; // Valor de gamma 
 
     
     public static int getSize() {

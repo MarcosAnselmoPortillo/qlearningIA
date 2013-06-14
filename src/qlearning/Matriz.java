@@ -29,7 +29,7 @@ public class Matriz {
         lado = ConfTab.getSize();
         // Poner todos los estados a nuetro
         for (int i = 0; i < lado*lado; i++) {
-            Estado e = new Estado();
+            Estado e = estados[i];
             e.setRecompensa(ConfTab.getrNeutro());
             e.setPosAbs(i);
             //inicializando la lista de acciones posibles
@@ -106,8 +106,7 @@ public class Matriz {
                 a.setDestino(estados[(desX*lado+desY)]);
                 a.setValorQ(0);
                 e.acciones.add(a);
-            }
-            estados[i]= e;               
+            }              
         }
      }
     
@@ -116,31 +115,28 @@ public class Matriz {
          lado = ConfTab.getSize();
          Random aleat = new Random();
          for (int i = 0; i < lado*lado; i++) {
-             Estado e= new Estado();
-             e.setPosAbs(i);
              float numale = aleat.nextFloat();
              if (numale<0.2) {
-                 e.setRecompensa(ConfTab.getrMalo());
+                 estados[i].setRecompensa(ConfTab.getrMalo());
                  
                 } else {
                  if (numale < 0.4){
-                     e.setRecompensa(ConfTab.getrPozo());
+                     estados[i].setRecompensa(ConfTab.getrPozo());
                      
                  } else {
                      if (numale < 0.6){
-                         e.setRecompensa(ConfTab.getrNeutro());
+                         estados[i].setRecompensa(ConfTab.getrNeutro());
                      } else {
                          if (numale < 0.75){
-                             e.setRecompensa(ConfTab.getrBueno());
+                             estados[i].setRecompensa(ConfTab.getrBueno());
                          } else {
                              if (numale < 1){
-                                 e.setRecompensa(ConfTab.getrExc());
+                                 estados[i].setRecompensa(ConfTab.getrExc());
                              }
                          }
                      }
                  }
-             }
-             estados[i]=e;            
+             }          
         }
      }
     
@@ -159,26 +155,26 @@ public class Matriz {
     }
     
     public static void aprendizaje(){
-        inicializarEstados();
-        Estado e = new Estado();
+        //inicializarEstados();
         Random aleat = new Random();
-        Accion a = new Accion();
         Politica p = new Politica();
         int i = 0;
         while (i < ConfTab.getEpisodios()){
             int indice = ConfTab.getSize()*ConfTab.getSize();
-            e = estados[aleat.nextInt(indice - 1)];
+            int pos = aleat.nextInt(indice - 1);
+            Estado e = estados[pos];
+            //System.out.println("Recompensa en aprendizaje " + e.getRecompensa() + " PosAbs " + e.getPosAbs() + " Pos: " + pos);
             while (e.getRecompensa() != ConfTab.getrFin()){
                 if (e.getRecompensa()== ConfTab.getrPozo()){
                     break;
                 }
-                //a = e.accionAleatoria(e);// esta línea se tiene que cambiar de acuerdo a la política
-                a = p.eGreedy(e); // esta acción o la aleatoria es la que esta teniendo problemas
-                a.setValorQ(e.getRecompensa()+ConfTab.getGamma()*e.accionMayorQ(e).getValorQ()); 
-                System.out.println(a.getValorQ());
-                System.out.println(a.getDestino());
+                Accion a = e.accionAleatoria();// esta línea se tiene que cambiar de acuerdo a la política
+                //a = p.eGreedy(e); // esta acción o la aleatoria es la que esta teniendo problemas
+                a.setValorQ(e.getRecompensa()+ConfTab.getGamma()*e.accionMayorQ().getValorQ()); 
+                //System.out.println(a.getValorQ());
+                //System.out.println(a.getDestino());
                 e = a.getDestino();
-                System.out.println("Recompensa " + e.getRecompensa());
+                //System.out.println("Recompensa " + e.getRecompensa());
             }
             i++;
         }
@@ -186,13 +182,23 @@ public class Matriz {
     
         //borra la lista de acciones del estado final y agrega una única accion
         //con destino a sí mismo y valor Q alto   
-    public void actualizarEstadoFinal(Estado e){
-        e.acciones.clear();
+//    public void actualizarEstadoFinal(Estado e){
+//        e.acciones.clear();
+//        Accion a = new Accion();
+//        a.setDestino(estados[e.getPosAbs()]);
+//        a.setValorQ(1000);
+//        e.acciones.add(a);
+//        
+//    }
+    
+    public static void actualizarEstadoFinal(int posAbs){
+        estados[posAbs].acciones.clear();
         Accion a = new Accion();
-        a.setDestino(estados[e.getPosAbs()]);
+        a.setDestino(estados[posAbs]);
         a.setValorQ(1000);
-        e.acciones.add(a);
-        
+        estados[posAbs].acciones.add(a);
+        //para probar..
+        //estados[posAbs].setRecompensa(ConfTab.getrFin());
     }
     
     //escribir la matriz R
@@ -201,22 +207,23 @@ public class Matriz {
         int lado = ConfTab.getSize();
 	for(int y = 0; y < lado; y++) {
 		for(int x = 0; x < lado; x++)
-			//System.out.format("%05d ", estados[x*lado + y].getRecompensa());
-                        System.out.print(estados[x*lado + y].getRecompensa()+ "");
+                        System.out.print(estados[x + y*lado].getRecompensa()+ " ");
 			
 		System.out.println();
 		}
     }
     
-    public static void main (String[] args){
-        //ConfTab x = new ConfTab();
-        ConfTab.setSize(3);
-        //inicializarEstados();
-        estadosAleat();
-        ConfTab.setEpsilon((float)0.2);
-        aprendizaje();
-        testMatrizR();
-    }
+//    public static void main (String[] args){
+//        //ConfTab x = new ConfTab();
+//        ConfTab.setSize(3);
+//        inicializarEstados();
+//        estadosAleat();
+//        actualizarEstadoFinal(3);
+//        ConfTab.setEpsilon((float)0.2);
+//        testMatrizR();
+//        aprendizaje();
+//        testMatrizR();
+//    }
     
     public static void cargarEstados(){
         for (int i = 0;i<estados.length;i++){
