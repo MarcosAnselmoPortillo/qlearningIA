@@ -27,16 +27,8 @@ public class ConfTab {
     private static float rFin = 1000; //Valor de la recompensa asociada al estado Final
     
     public static float gamma = (float) 0.8; // Valor de gamma 
+
     
-    public static float tolerancia; // Valor de la tolerancia entre las variaciones de la matriz Q
-
-    public static float getTolerancia() {
-        return tolerancia;
-    }
-
-    public static void setTolerancia(float tolerancia) {
-        ConfTab.tolerancia = tolerancia;
-    }
     public static int getSize() {
         return size;
     }
