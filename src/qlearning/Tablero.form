@@ -282,7 +282,6 @@
     <Component class="javax.swing.JButton" name="btnAprende">
       <Properties>
         <Property name="text" type="java.lang.String" value="Aprender"/>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAprendeActionPerformed"/>

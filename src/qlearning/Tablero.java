@@ -10,9 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.util.Random;
+import javax.swing.BorderFactory;
 //import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.border.Border;
 //import javax.swing.border.Border;
 
 /**
@@ -39,7 +41,8 @@ public class Tablero extends JFrame implements ActionListener {
     public JButton[] estados;
     public static int posFinal;
     public static int posInic = -1;
-       
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -159,7 +162,6 @@ public class Tablero extends JFrame implements ActionListener {
         });
 
         btnAprende.setText("Aprender");
-        btnAprende.setEnabled(false);
         btnAprende.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAprendeActionPerformed(evt);
@@ -462,7 +464,7 @@ public class Tablero extends JFrame implements ActionListener {
         }
         return flag;
     }
-      
+    
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
