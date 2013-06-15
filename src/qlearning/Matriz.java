@@ -255,11 +255,11 @@ public class Matriz {
     // desde el estado de posicion inicial, toma la acción del mayor Q. El estado siguiente es  el estado destino de esa accion
     // se guarda la posición del estado actual en un ArrayList para saber cuál es el camino recorrido
     // se almacena la posicion del estado inicial y también la posicion absoluta del estado final
-    public ArrayList recorrer(){
+    public static ArrayList recorrer(){
         Estado e = estados[Tablero.posInic]; //ver cual es el atributo en TAblero
         ArrayList recorrido = new ArrayList();
         recorrido.add(e.getPosAbs());
-        Accion a = new Accion();
+        Accion a;
         while (e.getRecompensa()!=ConfTab.getrFin()){
             a = e.accionMayorQ();
             recorrido.add(a.getDestino().getPosAbs());

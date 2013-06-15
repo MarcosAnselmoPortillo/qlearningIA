@@ -10,12 +10,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 import javax.swing.BorderFactory;
 //import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.border.Border;
+import javax.swing.text.html.HTMLDocument;
 //import javax.swing.border.Border;
 
 /**
@@ -475,12 +477,13 @@ public class Tablero extends JFrame implements ActionListener {
     //Pinta el recorrido aprendido
     public void mostrarRecorrido(){
         Border redLine = BorderFactory.createLineBorder(Color.RED, 3);
-        
-        while (it.hasNext()) {
-            int i = 0;
-            estados[i].setBorder(redLine);
-            jPanel1.add(estados[i], i);
-            Matriz.recorrido = it.next();
+        Iterator it;
+        ArrayList elCamino;
+        elCamino = Matriz.recorrer();
+        //it = elCamino.iterator();
+        for (int i = 0; i < elCamino.size(); i++) {
+            estados[(Integer)elCamino.get(i)].setBorder(redLine);
+            jPanel1.add(estados[(Integer)elCamino.get(i)], (Integer)elCamino.get(i));
         }
     }
     
@@ -522,6 +525,7 @@ public class Tablero extends JFrame implements ActionListener {
         finalUnico();
         matrizR();
         Matriz.aprendizaje();
+        mostrarRecorrido();
                 
     }//GEN-LAST:event_btnAprendeActionPerformed
 
