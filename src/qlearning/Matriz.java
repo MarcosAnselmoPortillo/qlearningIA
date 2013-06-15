@@ -19,6 +19,11 @@ public class Matriz {
     // hay que ver como se lo inicializa..
     public static Estado[] estados; //Arreglo de elementos tipo Estado  
     
+    public ArrayList recorrido = new ArrayList();
+    
+    public static float[] mat1;
+    
+    public static float[] mat2;
     /**
     * Se inicializan todos los estados a neutro
     * para despues poder cambiar a mano los necesarios
@@ -110,35 +115,35 @@ public class Matriz {
         }
      }
     
-    public static void estadosAleat(){
-         int lado;
-         lado = ConfTab.getSize();
-         Random aleat = new Random();
-         for (int i = 0; i < lado*lado; i++) {
-             float numale = aleat.nextFloat();
-             if (numale<0.2) {
-                 estados[i].setRecompensa(ConfTab.getrMalo());
-                 
-                } else {
-                 if (numale < 0.4){
-                     estados[i].setRecompensa(ConfTab.getrPozo());
-                     
-                 } else {
-                     if (numale < 0.6){
-                         estados[i].setRecompensa(ConfTab.getrNeutro());
-                     } else {
-                         if (numale < 0.75){
-                             estados[i].setRecompensa(ConfTab.getrBueno());
-                         } else {
-                             if (numale < 1){
-                                 estados[i].setRecompensa(ConfTab.getrExc());
-                             }
-                         }
-                     }
-                 }
-             }          
-        }
-     }
+//    public static void estadosAleat(){
+//         int lado;
+//         lado = ConfTab.getSize();
+//         Random aleat = new Random();
+//         for (int i = 0; i < lado*lado; i++) {
+//             float numale = aleat.nextFloat();
+//             if (numale<0.2) {
+//                 estados[i].setRecompensa(ConfTab.getrMalo());
+//                 
+//                } else {
+//                 if (numale < 0.4){
+//                     estados[i].setRecompensa(ConfTab.getrPozo());
+//                     
+//                 } else {
+//                     if (numale < 0.6){
+//                         estados[i].setRecompensa(ConfTab.getrNeutro());
+//                     } else {
+//                         if (numale < 0.75){
+//                             estados[i].setRecompensa(ConfTab.getrBueno());
+//                         } else {
+//                             if (numale < 1){
+//                                 estados[i].setRecompensa(ConfTab.getrExc());
+//                             }
+//                         }
+//                     }
+//                 }
+//             }          
+//        }
+//     }
     
     /**
      * la idea es recuperar de la interfaz la recompensa del estado 
@@ -146,13 +151,13 @@ public class Matriz {
      * la recompensa de ese estado.
      */
     
-    public void estadosManuales(float rTab, int x, int y){
-        int i;
-        int lado;
-        lado = ConfTab.getSize();
-        i=x*lado+y;
-        estados[i].setRecompensa(rTab);
-    }
+//    public void estadosManuales(float rTab, int x, int y){
+//        int i;
+//        int lado;
+//        lado = ConfTab.getSize();
+//        i=x*lado+y;
+//        estados[i].setRecompensa(rTab);
+//    }
     
     public static void aprendizaje(){
         //inicializarEstados();
@@ -163,16 +168,20 @@ public class Matriz {
             int indice = ConfTab.getSize()*ConfTab.getSize();
             int pos = aleat.nextInt(indice - 1);
             Estado e = estados[pos];
+            Accion a = new Accion();
             //System.out.println("Recompensa en aprendizaje " + e.getRecompensa() + " PosAbs " + e.getPosAbs() + " Pos: " + pos);
             while (e.getRecompensa() != ConfTab.getrFin()){
-                if (e.getRecompensa()== ConfTab.getrPozo()){
-                    break;
+                if (ConfTab.getEpsilon()!= -1) {
+                    a = p.eGreedy(e);
+                } else {
+                    a = p.softmax(e);
                 }
-                Accion a = e.accionAleatoria();// esta línea se tiene que cambiar de acuerdo a la política
-                //a = p.eGreedy(e); // esta acción o la aleatoria es la que esta teniendo problemas
                 a.setValorQ(e.getRecompensa()+ConfTab.getGamma()*e.accionMayorQ().getValorQ()); 
                 //System.out.println(a.getValorQ());
                 //System.out.println(a.getDestino());
+                if (e.getRecompensa()== ConfTab.getrPozo()){
+                    break;
+                }
                 e = a.getDestino();
                 //System.out.println("Recompensa " + e.getRecompensa());
             }
@@ -195,7 +204,7 @@ public class Matriz {
         estados[posAbs].acciones.clear();
         Accion a = new Accion();
         a.setDestino(estados[posAbs]);
-        a.setValorQ(1000);
+        a.setValorQ(0);
         estados[posAbs].acciones.add(a);
         //para probar..
         //estados[posAbs].setRecompensa(ConfTab.getrFin());
@@ -227,11 +236,43 @@ public class Matriz {
     
     public static void cargarEstados(){
         estados = new Estado[ConfTab.getSize()*ConfTab.getSize()];
+        mat1 = new float[ConfTab.getSize()*ConfTab.getSize()];
         for (int i = 0;i<estados.length;i++){
             Estado e = new Estado();
-            //e.setPosAbs(i);
+            e.setPosAbs(i);
             e.setRecompensa(0);
             estados[i]= e;
         }
+    }
+    
+    // desde el estado de posicion inicial, toma la acción del mayor Q. El estado siguiente es  el estado destino de esa accion
+    // se guarda la posición del estado actual en un arreglo para saber cuál es el camino recorrido
+    // se almacena también la posicion absoluta del estado final
+    public void recorrer(){
+        Estado e = estados[Tablero.posInic]; //ver cual es el atributo en TAblero
+        Accion a = new Accion();
+        while (e.getRecompensa()!=ConfTab.getrFin()){
+            a = e.accionMayorQ();
+            recorrido.add(a.getDestino().getPosAbs());
+            e = a.getDestino();
+        }
+        recorrido.add(e.getPosAbs());
+    }
+    
+    // compara los valores q. 
+    // el valor de q que se almacena es el valor de la accion de mayor q de ese estado.
+    public boolean compararMatricesQ (){
+        float[] aux = new float[estados.length]; // ver que pasa con esta línea... Parece no ser necesaria
+        
+        float error = 0;
+        float diferencia;
+        for (int i = 0;i<estados.length;i++){
+            diferencia = mat1[i]-mat2[i];
+            error += (Math.pow(2, diferencia))/2;
+            
+        }
+        if (error <= ConfTab.getTolerancia()) { 
+            return true; // significa que no hay grandes modificaciones en el aprendizaje
+        } else return false;
     }
 }
