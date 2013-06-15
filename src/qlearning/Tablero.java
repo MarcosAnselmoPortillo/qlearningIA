@@ -40,10 +40,9 @@ public class Tablero extends JFrame implements ActionListener {
     public static Color colExc = new Color(150, 150, 150);
     public static Color colPozo = new Color(0, 0, 0);
     public JButton[] estados;
-    public int posFinal;
-    public int posInic = -1;
+    public static int posFinal;
+    public static int posInic = -1;
     
-    private ArrayList recorrido;
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -385,7 +384,6 @@ public class Tablero extends JFrame implements ActionListener {
                     if (x < 0.6) {
                         estados[i].setText("E");
                         estados[i].setBackground(colExc);
-                        boolean add = recorrido.add(i);
                     } else {
                         if (x < 0.7) {
                             estados[i].setText("P");
@@ -515,7 +513,7 @@ public class Tablero extends JFrame implements ActionListener {
         finalUnico();
         matrizR();
         Matriz.aprendizaje();
-        mostrarRecorrido(recorrido);
+        //mostrarRecorrido();
                 
     }//GEN-LAST:event_btnAprendeActionPerformed
 
