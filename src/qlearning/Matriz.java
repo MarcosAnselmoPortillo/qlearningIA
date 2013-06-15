@@ -237,9 +237,13 @@ public class Matriz {
 //        testMatrizR();
 //    }
     
+    
+    // inicializa los arreglos estados, mat1 y mat2 con la long size*size
+    // agrega un estado a cada posicion del vector estados
     public static void cargarEstados(){
         estados = new Estado[ConfTab.getSize()*ConfTab.getSize()];
         mat1 = new float[ConfTab.getSize()*ConfTab.getSize()];
+        mat2 = new float[ConfTab.getSize()*ConfTab.getSize()];
         for (int i = 0;i<estados.length;i++){
             Estado e = new Estado();
             e.setPosAbs(i);
@@ -250,9 +254,10 @@ public class Matriz {
     
     // desde el estado de posicion inicial, toma la acción del mayor Q. El estado siguiente es  el estado destino de esa accion
     // se guarda la posición del estado actual en un arreglo para saber cuál es el camino recorrido
-    // se almacena también la posicion absoluta del estado final
+    // se almacena la posicion del estado inicial y también la posicion absoluta del estado final
     public void recorrer(){
         Estado e = estados[Tablero.posInic]; //ver cual es el atributo en TAblero
+        recorrido.add(e.getPosAbs());
         Accion a = new Accion();
         while (e.getRecompensa()!=ConfTab.getrFin()){
             a = e.accionMayorQ();
@@ -266,8 +271,6 @@ public class Matriz {
     // el valor de q que se almacena es el valor de la accion de mayor q de ese estado.
     // devuelve verdadero cuando no hay gran variacion entre las matrices q
     public static boolean compararMatricesQ (){
-        float[] aux = new float[estados.length]; // ver que pasa con esta línea... Parece no ser necesaria
-        
         float error = 0;
         float diferencia;
         for (int i = 0;i<estados.length;i++){
