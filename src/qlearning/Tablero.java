@@ -9,10 +9,13 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.BorderFactory;
 //import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.border.Border;
 //import javax.swing.border.Border;
 
 /**
@@ -39,6 +42,8 @@ public class Tablero extends JFrame implements ActionListener {
     public JButton[] estados;
     public int posFinal;
     public int posInic = -1;
+    
+    private ArrayList recorrido;
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -159,7 +164,6 @@ public class Tablero extends JFrame implements ActionListener {
         });
 
         btnAprende.setText("Aprender");
-        btnAprende.setEnabled(false);
         btnAprende.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAprendeActionPerformed(evt);
@@ -381,6 +385,7 @@ public class Tablero extends JFrame implements ActionListener {
                     if (x < 0.6) {
                         estados[i].setText("E");
                         estados[i].setBackground(colExc);
+                        boolean add = recorrido.add(i);
                     } else {
                         if (x < 0.7) {
                             estados[i].setText("P");
@@ -462,6 +467,15 @@ public class Tablero extends JFrame implements ActionListener {
         }
         return flag;
     }
+    
+    Border redLine = BorderFactory.createLineBorder(Color.RED, 3);
+    
+    public void mostrarRecorrido(ArrayList recorrido){
+        int size = recorrido.size();
+        for (int i = 0; i < size; i++) {
+            estados[(Integer) recorrido.get(i)].setBorder(redLine);
+        }
+    }
       
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         System.exit(0);
@@ -501,6 +515,7 @@ public class Tablero extends JFrame implements ActionListener {
         finalUnico();
         matrizR();
         Matriz.aprendizaje();
+        mostrarRecorrido(recorrido);
                 
     }//GEN-LAST:event_btnAprendeActionPerformed
 
