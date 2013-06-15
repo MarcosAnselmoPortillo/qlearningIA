@@ -30,6 +30,16 @@ public class ConfTab {
     
     public static float tolerancia; // Valor de la tolerancia entre las variaciones de la matriz Q
 
+    public static float valorQ = 0; // Valor por defecto de Q
+
+    public static float getValorQ() {
+        return valorQ;
+    }
+
+    public static void setValorQ(float valorQ) {
+        ConfTab.valorQ = valorQ;
+    }
+    
     public static float getTolerancia() {
         return tolerancia;
     }
