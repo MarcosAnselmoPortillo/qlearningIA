@@ -24,6 +24,8 @@ public class Matriz {
     public static float[] mat1;
     
     public static float[] mat2;
+    
+    public static boolean compMatQ = false;
     /**
     * Se inicializan todos los estados a neutro
     * para despues poder cambiar a mano los necesarios
@@ -164,7 +166,7 @@ public class Matriz {
         Random aleat = new Random();
         Politica p = new Politica();
         int i = 0;
-        while (i < ConfTab.getEpisodios()){
+        while (i < ConfTab.getEpisodios() && !compMatQ){
             int indice = ConfTab.getSize()*ConfTab.getSize();
             int pos = aleat.nextInt(indice - 1);
             Estado e = estados[pos];
@@ -186,6 +188,7 @@ public class Matriz {
                 //System.out.println("Recompensa " + e.getRecompensa());
             }
             i++;
+            compMatQ = compararMatricesQ();
         }
     }
     
@@ -261,7 +264,8 @@ public class Matriz {
     
     // compara los valores q. 
     // el valor de q que se almacena es el valor de la accion de mayor q de ese estado.
-    public boolean compararMatricesQ (){
+    // devuelve verdadero cuando no hay gran variacion entre las matrices q
+    public static boolean compararMatricesQ (){
         float[] aux = new float[estados.length]; // ver que pasa con esta línea... Parece no ser necesaria
         
         float error = 0;
