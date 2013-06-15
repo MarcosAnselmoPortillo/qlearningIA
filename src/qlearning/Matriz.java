@@ -46,7 +46,7 @@ public class Matriz {
             if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
                 Accion a = new Accion();
                 a.setDestino(estados[(desX*lado+desY)]);
-                a.setValorQ(0);
+                a.setValorQ(ConfTab.valorQ);
                 e.acciones.add(a);
             }
             //comprobar movimiento N
@@ -55,7 +55,7 @@ public class Matriz {
             if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
                 Accion a = new Accion();
                 a.setDestino(estados[(desX*lado+desY)]);
-                a.setValorQ(0);
+                a.setValorQ(ConfTab.valorQ);
                 e.acciones.add(a);
             }
             //comprobar movimiento NE
@@ -64,7 +64,7 @@ public class Matriz {
             if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
                 Accion a = new Accion();
                 a.setDestino(estados[(desX*lado+desY)]);
-                a.setValorQ(0);
+                a.setValorQ(ConfTab.valorQ);
                 e.acciones.add(a);
             }
             //comprobar movimiento E
@@ -73,7 +73,7 @@ public class Matriz {
             if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
                 Accion a = new Accion();
                 a.setDestino(estados[(desX*lado+desY)]);
-                a.setValorQ(0);
+                a.setValorQ(ConfTab.valorQ);
                 e.acciones.add(a);
             }
             //comprobar movimiento SE
@@ -82,7 +82,7 @@ public class Matriz {
             if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
                 Accion a = new Accion();
                 a.setDestino(estados[(desX*lado+desY)]);
-                a.setValorQ(0);
+                a.setValorQ(ConfTab.valorQ);
                 e.acciones.add(a);
             }
             //comprobar movimiento S
@@ -91,7 +91,7 @@ public class Matriz {
             if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
                 Accion a = new Accion();
                 a.setDestino(estados[(desX*lado+desY)]);
-                a.setValorQ(0);
+                a.setValorQ(ConfTab.valorQ);
                 e.acciones.add(a);
             }
             //comprobar movimiento SO
@@ -100,7 +100,7 @@ public class Matriz {
             if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
                 Accion a = new Accion();
                 a.setDestino(estados[(desX*lado+desY)]);
-                a.setValorQ(0);
+                a.setValorQ(ConfTab.valorQ);
                 e.acciones.add(a);
             }
             //comprobar movimiento O
@@ -109,7 +109,7 @@ public class Matriz {
             if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
                 Accion a = new Accion();
                 a.setDestino(estados[(desX*lado+desY)]);
-                a.setValorQ(0);
+                a.setValorQ(ConfTab.valorQ);
                 e.acciones.add(a);
             }              
         }
@@ -205,7 +205,7 @@ public class Matriz {
         estados[posAbs].acciones.clear();
         Accion a = new Accion();
         a.setDestino(estados[posAbs]);
-        a.setValorQ(0);
+        a.setValorQ(ConfTab.valorQ);
         estados[posAbs].acciones.add(a);
         //para probar..
         //estados[posAbs].setRecompensa(ConfTab.getrFin());
