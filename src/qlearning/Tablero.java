@@ -480,13 +480,10 @@ public class Tablero extends JFrame implements ActionListener {
         Iterator it;
         ArrayList elCamino;
         elCamino = Matriz.recorrer();
-        it = elCamino.iterator();
-        while (it.hasNext()) {
-            int i = 0;
-            estados[i].setBorder(redLine);
-            jPanel1.add(estados[i], i);
-            it.next();
-            i ++;
+        //it = elCamino.iterator();
+        for (int i = 0; i < elCamino.size(); i++) {
+            estados[(Integer)elCamino.get(i)].setBorder(redLine);
+            jPanel1.add(estados[(Integer)elCamino.get(i)], (Integer)elCamino.get(i));
         }
     }
     
@@ -528,6 +525,7 @@ public class Tablero extends JFrame implements ActionListener {
         finalUnico();
         matrizR();
         Matriz.aprendizaje();
+        mostrarRecorrido();
                 
     }//GEN-LAST:event_btnAprendeActionPerformed
 
