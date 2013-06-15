@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.BorderFactory;
 //import javax.swing.BorderFactory;
@@ -255,6 +256,7 @@ public class Tablero extends JFrame implements ActionListener {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
+    //Toma el valor de tamaño del tablero desde el comboBox
     private void sizeDePantalla (){
         int size= 0;
         String aux = (String)comboSize.getSelectedItem();
@@ -273,6 +275,7 @@ public class Tablero extends JFrame implements ActionListener {
         ConfTab.setSize(size);
     }
     
+    //Toma el valor de que tipo de estado se quiere colocar en el tablero
     public String tipoDePantalla(){
         String aux = (String) comboTipo.getSelectedItem();
         switch(aux){
@@ -310,6 +313,7 @@ public class Tablero extends JFrame implements ActionListener {
         return aux;
     }
     
+    //Dependiendo de que politica se selecciona actualiza el valor de epsilon o tau en la clase ConfTab
     public void politicaElegida(){
          if(radioEpsilon.isSelected()){
              ConfTab.setEpsilon(Float.parseFloat(textEpsilon.getText()));
@@ -320,7 +324,6 @@ public class Tablero extends JFrame implements ActionListener {
     }
     
     //Pinta un tablero con el tamaño elegido y todos los estados neutro
-    
     public void iniciar(){
         sizeDePantalla();
         int size = ConfTab.size;
@@ -366,7 +369,8 @@ public class Tablero extends JFrame implements ActionListener {
         }
         jPanel1.setVisible(true);
     }
-        
+    
+    //Pinta un tablero definiendo los tipos de estado aleatoriamente
     public void aleatorio(){
         
         int size = ConfTab.getSize();
@@ -416,6 +420,7 @@ public class Tablero extends JFrame implements ActionListener {
         //jPanel1.setVisible(true);
     }    
     
+    //Segun los tipos de estado, actualiza los valores de recompensa en el arreglo de estados de Matriz
     public void matrizR(){
         int size = ConfTab.getSize();
         for (int i = 0; i < (size*size); i++) {
@@ -443,6 +448,7 @@ public class Tablero extends JFrame implements ActionListener {
         }
     }
     
+    //Verifica que el final sea unico
     public Boolean finalUnico(){
         Boolean flag = true;
         for (int i = 0; i < (ConfTab.getSize()*ConfTab.getSize()); i++) {
@@ -454,6 +460,7 @@ public class Tablero extends JFrame implements ActionListener {
         return flag;
     }
     
+    //Verifica que el inicio sea unico
     public Boolean inicialUnico(){
         Boolean flag = true;
         for (int i = 0; i < (ConfTab.getSize()*ConfTab.getSize()); i++) {
@@ -463,6 +470,18 @@ public class Tablero extends JFrame implements ActionListener {
             }
         }
         return flag;
+    }
+    
+    //Pinta el recorrido aprendido
+    public void mostrarRecorrido(){
+        Border redLine = BorderFactory.createLineBorder(Color.RED, 3);
+        
+        while (it.hasNext()) {
+            int i = 0;
+            estados[i].setBorder(redLine);
+            jPanel1.add(estados[i], i);
+            Matriz.recorrido = it.next();
+        }
     }
     
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
