@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.util.Random;
 //import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -36,6 +37,8 @@ public class Tablero extends JFrame implements ActionListener {
     public static Color colExc = new Color(150, 150, 150);
     public static Color colPozo = new Color(0, 0, 0);
     public JButton[] estados;
+    public int posFinal;
+    public int posInic = -1;
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -123,6 +126,7 @@ public class Tablero extends JFrame implements ActionListener {
         jLabel2.setText("Políticas");
 
         btnAleat.setText("Aleatorio");
+        btnAleat.setEnabled(false);
         btnAleat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAleatActionPerformed(evt);
@@ -137,6 +141,12 @@ public class Tablero extends JFrame implements ActionListener {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("є");
 
+        textEpsilon.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                textEpsilonPropertyChange(evt);
+            }
+        });
+
         jLabel5.setText("Tipo de Mapa");
 
         jLabel6.setText("Tamaño");
@@ -149,6 +159,7 @@ public class Tablero extends JFrame implements ActionListener {
         });
 
         btnAprende.setText("Aprender");
+        btnAprende.setEnabled(false);
         btnAprende.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAprendeActionPerformed(evt);
@@ -231,7 +242,8 @@ public class Tablero extends JFrame implements ActionListener {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAprende)
-                            .addComponent(btnSalir))))
+                            .addComponent(btnSalir))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(31, 31, 31))
         );
 
@@ -259,7 +271,7 @@ public class Tablero extends JFrame implements ActionListener {
         ConfTab.setSize(size);
     }
     
-    public void tipoDePantalla(){
+    public String tipoDePantalla(){
         String aux = (String) comboTipo.getSelectedItem();
         switch(aux){
             case "Malo":{
@@ -293,6 +305,7 @@ public class Tablero extends JFrame implements ActionListener {
             }
                 break;
         }
+        return aux;
     }
     
     public void politicaElegida(){
@@ -321,7 +334,23 @@ public class Tablero extends JFrame implements ActionListener {
             temp.addActionListener(new ActionListener() {
 
                 @Override
-                public void actionPerformed(ActionEvent e) {
+                public void actionPerformed(ActionEvent e) {                       
+                    if ("Final".equals(tipoDePantalla())){
+                        if (!finalUnico()){
+                            estados[posFinal].setBackground(Color.WHITE);
+                            estados[posFinal].setText("");
+                            jPanel1.remove(posFinal);
+                            jPanel1.add(estados[posFinal], posFinal);
+                        }
+                    }
+                    if ("Inicial".equals(tipoDePantalla())){
+                        if (!inicialUnico()){
+                            estados[posInic].setBackground(Color.WHITE);
+                            estados[posInic].setText("");
+                            jPanel1.remove(posInic);
+                            jPanel1.add(estados[posInic], posInic);
+                        }
+                    }
                     temp.setText(letra);
                     temp.setBackground(fondo);
                 }
@@ -366,12 +395,22 @@ public class Tablero extends JFrame implements ActionListener {
             }
             jPanel1.add(estados[i]);
         }
+        
+        //Para colocar el estado inicial en una posicion aleatoria
+        int z = new Random().nextInt(size*size);
+        estados[z].setText("Inicial");
+        estados[z].setBackground(Color.WHITE);
+        posInic = z;
+        jPanel1.remove(z);
+        jPanel1.add(estados[z], z);
+        
         //Para colocar el estado final en una posicion aleatoria
         int y = new Random().nextInt(size*size);
         estados[y].setText("Final");
         estados[y].setBackground(Color.WHITE);
+        posFinal = y;
         jPanel1.remove(y);
-        jPanel1.add(estados[y]);
+        jPanel1.add(estados[y], y);
         //jPanel1.setVisible(true);
     }    
     
@@ -392,6 +431,7 @@ public class Tablero extends JFrame implements ActionListener {
                         } else {
                             if ("Final".equals(estados[i].getText())){
                                 Matriz.estados[i].setRecompensa(ConfTab.getrFin());
+                                Matriz.actualizarEstadoFinal(i);
                             } else
                                 Matriz.estados[i].setRecompensa(ConfTab.getrNeutro());
                         }
@@ -399,6 +439,28 @@ public class Tablero extends JFrame implements ActionListener {
                 }
             }
         }
+    }
+    
+    public Boolean finalUnico(){
+        Boolean flag = true;
+        for (int i = 0; i < (ConfTab.getSize()*ConfTab.getSize()); i++) {
+            if ("Final".equals(estados[i].getText())){
+                flag = false;
+                posFinal = i;
+            }
+        }
+        return flag;
+    }
+    
+    public Boolean inicialUnico(){
+        Boolean flag = true;
+        for (int i = 0; i < (ConfTab.getSize()*ConfTab.getSize()); i++) {
+            if ("Inicial".equals(estados[i].getText())){
+                flag = false;
+                posInic = i;
+            }
+        }
+        return flag;
     }
       
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -425,18 +487,26 @@ public class Tablero extends JFrame implements ActionListener {
 
     private void comboSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSizeActionPerformed
         iniciar();
+        btnAleat.setEnabled(true);
     }//GEN-LAST:event_comboSizeActionPerformed
 
     private void comboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoActionPerformed
-        tipoDePantalla();    
+        tipoDePantalla();
     }//GEN-LAST:event_comboTipoActionPerformed
 
     private void btnAprendeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAprendeActionPerformed
+        
         politicaElegida();
         Matriz.inicializarEstados();
+        finalUnico();
         matrizR();
+        Matriz.aprendizaje();
                 
     }//GEN-LAST:event_btnAprendeActionPerformed
+
+    private void textEpsilonPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_textEpsilonPropertyChange
+        
+    }//GEN-LAST:event_textEpsilonPropertyChange
 
     /**
      * @param args the command line arguments
