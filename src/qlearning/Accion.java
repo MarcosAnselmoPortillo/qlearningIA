@@ -8,7 +8,7 @@ public class Accion {
     
     public float valorQ;
     
-    public Estado destino; //estado destino de la acción
+    public int destino; //posición del estado destino de la acción
     
     public float prob; //Probabilidad de elegir esta accion para softmax o cuando explora
 
@@ -20,11 +20,11 @@ public class Accion {
         this.valorQ = valorQ;
     }
 
-    public Estado getDestino() {
+     public int getDestino() {
         return destino;
     }
 
-    public void setDestino(Estado destino) {
+    public void setDestino(int destino) {
         this.destino = destino;
     }
 
