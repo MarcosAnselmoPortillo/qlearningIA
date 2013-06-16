@@ -16,7 +16,7 @@ public class Matriz {
      * lo q tengo q ver es como definir que los elementos 
      * sean solo de tipo Estado
      */
-    // hay que ver como se lo inicializa..
+   
     public static Estado[] estados; //Arreglo de elementos tipo Estado  
     
     public static float[] mat1;
@@ -34,9 +34,9 @@ public class Matriz {
         lado = ConfTab.getSize();
         // Poner todos los estados a nuetro
         for (int i = 0; i < lado*lado; i++) {
-            Estado e = estados[i];
-            e.setRecompensa(ConfTab.getrNeutro());
-            e.setPosAbs(i);
+            
+            estados[i].setRecompensa(ConfTab.getrNeutro());
+            
             //inicializando la lista de acciones posibles
             int posY = i/lado;
             int posX = i%lado;
@@ -45,120 +45,76 @@ public class Matriz {
             int desX = posX - 1;
             if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
                 Accion a = new Accion();
-                a.setDestino(estados[(desX*lado+desY)]);
+                a.setDestino(estados[(desX +lado*desY)].getPosAbs());
                 a.setValorQ(ConfTab.valorQ);
-                e.acciones.add(a);
+                estados[i].acciones.add(a);
             }
             //comprobar movimiento N
             desY = posY - 1;
             desX = posX;
             if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
                 Accion a = new Accion();
-                a.setDestino(estados[(desX*lado+desY)]);
+                a.setDestino(estados[(desX +lado*desY)].getPosAbs());
                 a.setValorQ(ConfTab.valorQ);
-                e.acciones.add(a);
+                estados[i].acciones.add(a);
             }
             //comprobar movimiento NE
             desY = posY - 1;
             desX = posX + 1;
             if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
                 Accion a = new Accion();
-                a.setDestino(estados[(desX*lado+desY)]);
+                a.setDestino(estados[(desX +lado*desY)].getPosAbs());
                 a.setValorQ(ConfTab.valorQ);
-                e.acciones.add(a);
+                estados[i].acciones.add(a);
             }
             //comprobar movimiento E
             desY = posY;
             desX = posX + 1;
             if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
                 Accion a = new Accion();
-                a.setDestino(estados[(desX*lado+desY)]);
+                a.setDestino(estados[(desX +lado*desY)].getPosAbs());
                 a.setValorQ(ConfTab.valorQ);
-                e.acciones.add(a);
+                estados[i].acciones.add(a);
             }
             //comprobar movimiento SE
             desY = posY + 1;
             desX = posX + 1;
             if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
                 Accion a = new Accion();
-                a.setDestino(estados[(desX*lado+desY)]);
+                a.setDestino(estados[(desX +lado*desY)].getPosAbs());
                 a.setValorQ(ConfTab.valorQ);
-                e.acciones.add(a);
+                estados[i].acciones.add(a);
             }
             //comprobar movimiento S
             desY = posY + 1;
             desX = posX;
             if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
                 Accion a = new Accion();
-                a.setDestino(estados[(desX*lado+desY)]);
+                a.setDestino(estados[(desX +lado*desY)].getPosAbs());
                 a.setValorQ(ConfTab.valorQ);
-                e.acciones.add(a);
+                estados[i].acciones.add(a);
             }
             //comprobar movimiento SO
             desY = posY + 1;
             desX = posX - 1;
             if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
                 Accion a = new Accion();
-                a.setDestino(estados[(desX*lado+desY)]);
+                a.setDestino(estados[(desX +lado*desY)].getPosAbs());
                 a.setValorQ(ConfTab.valorQ);
-                e.acciones.add(a);
+                estados[i].acciones.add(a);
             }
             //comprobar movimiento O
             desY = posY;
             desX = posX - 1;
             if (desY >= 0 && desY < lado && desX >= 0 && desX < lado){
                 Accion a = new Accion();
-                a.setDestino(estados[(desX*lado+desY)]);
+                a.setDestino(estados[(desX +lado*desY)].getPosAbs());
                 a.setValorQ(ConfTab.valorQ);
-                e.acciones.add(a);
+                estados[i].acciones.add(a);
             }              
         }
      }
-    
-//    public static void estadosAleat(){
-//         int lado;
-//         lado = ConfTab.getSize();
-//         Random aleat = new Random();
-//         for (int i = 0; i < lado*lado; i++) {
-//             float numale = aleat.nextFloat();
-//             if (numale<0.2) {
-//                 estados[i].setRecompensa(ConfTab.getrMalo());
-//                 
-//                } else {
-//                 if (numale < 0.4){
-//                     estados[i].setRecompensa(ConfTab.getrPozo());
-//                     
-//                 } else {
-//                     if (numale < 0.6){
-//                         estados[i].setRecompensa(ConfTab.getrNeutro());
-//                     } else {
-//                         if (numale < 0.75){
-//                             estados[i].setRecompensa(ConfTab.getrBueno());
-//                         } else {
-//                             if (numale < 1){
-//                                 estados[i].setRecompensa(ConfTab.getrExc());
-//                             }
-//                         }
-//                     }
-//                 }
-//             }          
-//        }
-//     }
-    
-    /**
-     * la idea es recuperar de la interfaz la recompensa del estado 
-     * que se quiere setear, y modificar, en la posición seleccionada,
-     * la recompensa de ese estado.
-     */
-    
-//    public void estadosManuales(float rTab, int x, int y){
-//        int i;
-//        int lado;
-//        lado = ConfTab.getSize();
-//        i=x*lado+y;
-//        estados[i].setRecompensa(rTab);
-//    }
-    
+  
     public static void aprendizaje(){
         //inicializarEstados();
         Random aleat = new Random();
@@ -168,8 +124,7 @@ public class Matriz {
             int indice = ConfTab.getSize()*ConfTab.getSize();
             int pos = aleat.nextInt(indice - 1);
             Estado e = estados[pos];
-            Accion a = new Accion();
-            //System.out.println("Recompensa en aprendizaje " + e.getRecompensa() + " PosAbs " + e.getPosAbs() + " Pos: " + pos);
+            Accion a ;
             while (e.getRecompensa() != ConfTab.getrFin()){
                 if (ConfTab.getEpsilon()!= -1) {
                     a = p.eGreedy(e);
@@ -177,38 +132,24 @@ public class Matriz {
                     a = p.softmax(e);
                 }
                 a.setValorQ(e.getRecompensa()+ConfTab.getGamma()*e.accionMayorQ().getValorQ()); 
-                //System.out.println(a.getValorQ());
-                //System.out.println(a.getDestino());
                 if (e.getRecompensa()== ConfTab.getrPozo()){
                     break;
                 }
-                e = a.getDestino();
-                //System.out.println("Recompensa " + e.getRecompensa());
+                e = estados[a.getDestino()];
             }
             i++;
-            compMatQ = compararMatricesQ();
+            //compMatQ = compararMatricesQ();
         }
     }
     
         //borra la lista de acciones del estado final y agrega una única accion
-        //con destino a sí mismo y valor Q alto   
-//    public void actualizarEstadoFinal(Estado e){
-//        e.acciones.clear();
-//        Accion a = new Accion();
-//        a.setDestino(estados[e.getPosAbs()]);
-//        a.setValorQ(1000);
-//        e.acciones.add(a);
-//        
-//    }
-    
+        //con destino a sí mismo y valor Q ConfTab.valorQ   
     public static void actualizarEstadoFinal(int posAbs){
         estados[posAbs].acciones.clear();
         Accion a = new Accion();
-        a.setDestino(estados[posAbs]);
+        a.setDestino(posAbs);
         a.setValorQ(ConfTab.valorQ);
         estados[posAbs].acciones.add(a);
-        //para probar..
-        //estados[posAbs].setRecompensa(ConfTab.getrFin());
     }
     
     //escribir la matriz R
@@ -256,16 +197,16 @@ public class Matriz {
     // se guarda la posición del estado actual en un ArrayList para saber cuál es el camino recorrido
     // se almacena la posicion del estado inicial y también la posicion absoluta del estado final
     public static ArrayList recorrer(){
-        Estado e = estados[Tablero.posInic]; //ver cual es el atributo en TAblero
+        //Estado e = estados[Tablero.posInic]; //ver cual es el atributo en TAblero
         ArrayList recorrido = new ArrayList();
-        recorrido.add(e.getPosAbs());
+        //recorrido.add(Tablero.posInic);
+        int posAux = Tablero.posInic;
         Accion a;
-        while (e.getRecompensa()!=ConfTab.getrFin()){
-            a = e.accionMayorQ();
-            recorrido.add(a.getDestino().getPosAbs());
-            e = a.getDestino();
+        while (estados[posAux].getRecompensa()!=ConfTab.getrFin()){
+            recorrido.add(posAux);
+            posAux = estados[posAux].accionMayorQ().getDestino();
         }
-        recorrido.add(e.getPosAbs());
+        recorrido.add(posAux);
         return recorrido;
     }
     

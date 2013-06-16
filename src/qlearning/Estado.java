@@ -53,7 +53,7 @@ public class Estado {
     }
     
     public Accion accionAleatoria (){
-        Accion accion = new Accion();
+        Accion accion;
         int size = this.acciones.size();
         if (size <= 1){
             accion = this.acciones.get(0);
