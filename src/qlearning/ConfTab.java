@@ -8,9 +8,9 @@ public class ConfTab {
     
     public static int size; //Tamaño del tablero
     
-    public static float epsilon = -1; //Valor de epsilon
+    public static double epsilon = -1; //Valor de epsilon
     
-    public static float tau = -1; //Valor de temperatura
+    public static double tau = -1; //Valor de temperatura
     
     private static int episodios = 100; //Cantidad de episodios
         
@@ -55,19 +55,19 @@ public class ConfTab {
         ConfTab.size = size;
     }
 
-    public static float getEpsilon() {
+    public static double getEpsilon() {
         return epsilon;
     }
 
-    public static void setEpsilon(float epsilon) {
+    public static void setEpsilon(double epsilon) {
         ConfTab.epsilon = epsilon;
     }
 
-    public static float getTau() {
+    public static double getTau() {
         return tau;
     }
 
-    public static void setTau(float tau) {
+    public static void setTau(double tau) {
         ConfTab.tau = tau;
     }
 

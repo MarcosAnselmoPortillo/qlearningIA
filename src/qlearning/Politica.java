@@ -41,7 +41,7 @@ public class Politica {
     public Accion softmax (Estado e){
         Accion a;
         int longLista = e.acciones.size();
-        float valorTau = ConfTab.getTau();
+        double valorTau = ConfTab.getTau();
         float sum = 0;
         for (int i = 0; i < longLista; i++) {        
             sum += (float) Math.exp(e.acciones.get(i).getValorQ()/valorTau);
