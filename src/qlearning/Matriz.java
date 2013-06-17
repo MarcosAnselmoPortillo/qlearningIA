@@ -179,14 +179,14 @@ public class Matriz {
     // se guarda la posición del estado actual en un ArrayList para saber cuál es el camino recorrido
     // se almacena la posicion del estado inicial y también la posicion absoluta del estado final
     public static ArrayList recorrer(){
-        //Estado e = estados[Tablero.posInic]; //ver cual es el atributo en TAblero
         ArrayList recorrido = new ArrayList();
-        //recorrido.add(Tablero.posInic);
         int posAux = Tablero.posInic;
-        Accion a;
+        int posAccion;
         while (estados[posAux].getRecompensa()!=ConfTab.getrFin()){
             recorrido.add(posAux);
-            posAux = estados[posAux].accionMayorQ().getDestino();
+            posAccion = estados[posAux].accionMayorQ(); // se obtiene la posicion de la accion de mayor Q
+            //posAux = estados[posAux].accionMayorQ().getDestino();
+            posAux = estados[posAux].acciones.get(posAccion).getDestino(); // se actualiza posAux
         }
         recorrido.add(posAux);
         return recorrido;
