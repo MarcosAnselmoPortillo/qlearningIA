@@ -39,31 +39,32 @@ public class Estado {
         this.recompensa = recompensa;
     }
     
-    public Accion accionMayorQ(){
+    public int accionMayorQ(){
         int longLista = this.acciones.size();
         //Estado eMayorQ = e.acciones.get(0).destino;
-        Accion aMayorQ = this.getAcciones().get(0);
+        //Accion aMayorQ = this.getAcciones().get(0);
+        int posAccion = 0;
         float valorQresg = acciones.get(0).valorQ;
         for (int i = 0 ; i < longLista;i++){
             if (acciones.get(i).valorQ > valorQresg){
-                    aMayorQ = acciones.get(i);
+                    //posAccion = acciones.get(i).;
+                    posAccion = i;
             }
         }        
-        return aMayorQ;
+        return posAccion;
     }
     
-    public Accion accionAleatoria (){
-        Accion accion;
+    public int accionAleatoria (){
+        int posAccion;
         int size = this.acciones.size();
         if (size <= 1){
-            accion = this.acciones.get(0);
+            posAccion = 0;
         } else {
-            int x = new Random().nextInt(size-1);
-            //int x = 1;
-            accion = this.acciones.get(x);
+            int x = new Random().nextInt(size);
+            posAccion = x;
         }
         
-        return accion;
+        return posAccion;
     }
     
     
