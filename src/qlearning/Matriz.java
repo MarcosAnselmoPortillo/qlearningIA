@@ -133,7 +133,11 @@ public class Matriz {
                     posAccion = p.softmax(e);
                 }
                 //posAccion = e.accionAleatoria();
-                nuevoQ = e.getRecompensa()+ConfTab.getGamma()*e.acciones.get(e.accionMayorQ()).getValorQ();
+                float a = estados[e.acciones.get(posAccion).getDestino()].getRecompensa();
+                float b = ConfTab.getGamma();
+                float c = e.acciones.get(e.accionMayorQ()).getValorQ();
+                //nuevoQ = e.getRecompensa()+ConfTab.getGamma()*e.acciones.get(e.accionMayorQ()).getValorQ();
+                nuevoQ = (a + (b*c));
                 e.acciones.get(posAccion).setValorQ(nuevoQ); 
                 if (e.getRecompensa()== ConfTab.getrPozo()){
                     break;
@@ -149,11 +153,11 @@ public class Matriz {
         //con destino a sí mismo y valor Q ConfTab.valorQ   
     public static void actualizarEstadoFinal(int posAbs){
         estados[posAbs].setRecompensa(ConfTab.getrFin()); //agregado sólo para probar desde aca
-        estados[posAbs].acciones.clear();
-        Accion a = new Accion();
-        a.setDestino(posAbs);
-        a.setValorQ(0);
-        estados[posAbs].acciones.add(a);
+//        estados[posAbs].acciones.clear();
+//        Accion a = new Accion();
+//        a.setDestino(posAbs);
+//        a.setValorQ(0);
+//        estados[posAbs].acciones.add(a);
     }
     
    
@@ -184,7 +188,7 @@ public class Matriz {
         int posAccion;
         while (estados[posAux].getRecompensa()!=ConfTab.getrFin()){
             recorrido.add(posAux);
-            posAccion = estados[posAux].accionMayorQ(); // se obtiene la posicion de la accion de mayor Q
+            posAccion = estados[posAux].accionQOptimo(); // se obtiene la posicion de la accion de mayor Q
             //posAux = estados[posAux].accionMayorQ().getDestino();
             posAux = estados[posAux].acciones.get(posAccion).getDestino(); // se actualiza posAux
         }

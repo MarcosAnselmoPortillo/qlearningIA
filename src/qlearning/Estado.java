@@ -54,6 +54,35 @@ public class Estado {
         return posAccion;
     }
     
+    // devuelve la posición del ArrayList acciones de la accion que tiene el qPromedio mas alto
+    public int accionQOptimo(){
+        float prom;
+        float promResguardo = 0;
+        int posEstado,posAccionOpt = 0;
+        for (int i = 0; i < this.acciones.size(); i++) {
+            posEstado = this.acciones.get(i).getDestino();
+            prom = Matriz.estados[posEstado].qPromedio();
+            if (i==0) {
+                posAccionOpt = 0;
+                promResguardo = prom;
+            }
+            if (promResguardo <= prom) {
+                posAccionOpt = i;
+                promResguardo = prom;
+            }
+        }
+        return posAccionOpt;
+    }
+    
+    //calcula el valor q promedio de un estado
+    public float qPromedio(){
+        float prom = 0;
+        for (int i = 0;i<this.acciones.size();i++){
+            prom += this.acciones.get(i).getValorQ();
+        }
+        prom = prom/this.acciones.size();
+        return prom;
+    }
     public int accionAleatoria (){
         int posAccion;
         int size = this.acciones.size();
