@@ -9,7 +9,7 @@ public class Accion {
     public float valorQ;
     
     public int destino; //posición del estado destino de la acción
-    
+     
     public float prob; //Probabilidad de elegir esta accion para softmax o cuando explora
 
     public float getValorQ() {

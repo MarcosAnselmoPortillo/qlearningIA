@@ -116,27 +116,30 @@ public class Matriz {
      }
   
     public static void aprendizaje(){
-        //inicializarEstados();
         Random aleat = new Random();
         Politica p = new Politica();
         int i = 0;
+        float nuevoQ;
         while (i < ConfTab.getEpisodios() && !compMatQ){
             int indice = ConfTab.getSize()*ConfTab.getSize();
-            int pos = aleat.nextInt(indice - 1);
-            Estado e = estados[pos];
-            Accion a ;
-            while (e.getRecompensa() != ConfTab.getrFin()){
+            int posAleat = aleat.nextInt(indice - 1);
+            Estado e = estados[posAleat];
+            int posAccion ;
+            
+            do {
                 if (ConfTab.getEpsilon()!= -1) {
-                    a = p.eGreedy(e);
+                    posAccion = p.eGreedy(e);
                 } else {
-                    a = p.softmax(e);
+                    posAccion = p.softmax(e);
                 }
-                a.setValorQ(e.getRecompensa()+ConfTab.getGamma()*e.accionMayorQ().getValorQ()); 
+                //posAccion = e.accionAleatoria();
+                nuevoQ = e.getRecompensa()+ConfTab.getGamma()*e.acciones.get(e.accionMayorQ()).getValorQ();
+                e.acciones.get(posAccion).setValorQ(nuevoQ); 
                 if (e.getRecompensa()== ConfTab.getrPozo()){
                     break;
                 }
-                e = estados[a.getDestino()];
-            }
+                e = estados[e.acciones.get(posAccion).getDestino()];             
+            } while (e.getRecompensa() != ConfTab.getrFin());
             i++;
             //compMatQ = compararMatricesQ();
         }
@@ -145,36 +148,15 @@ public class Matriz {
         //borra la lista de acciones del estado final y agrega una única accion
         //con destino a sí mismo y valor Q ConfTab.valorQ   
     public static void actualizarEstadoFinal(int posAbs){
-        estados[posAbs].acciones.clear();
-        Accion a = new Accion();
-        a.setDestino(posAbs);
-        a.setValorQ(ConfTab.valorQ);
-        estados[posAbs].acciones.add(a);
+        estados[posAbs].setRecompensa(ConfTab.getrFin()); //agregado sólo para probar desde aca
+//        estados[posAbs].acciones.clear();
+//        Accion a = new Accion();
+//        a.setDestino(posAbs);
+//        a.setValorQ(1000);
+//        estados[posAbs].acciones.add(a);
     }
     
-    //escribir la matriz R
-    public static void testMatrizR(){
-        System.out.println("Matriz R");
-        int lado = ConfTab.getSize();
-	for(int y = 0; y < lado; y++) {
-		for(int x = 0; x < lado; x++)
-                        System.out.print(estados[x + y*lado].getRecompensa()+ " ");
-			
-		System.out.println();
-		}
-    }
-    
-//    public static void main (String[] args){
-//        //ConfTab x = new ConfTab();
-//        ConfTab.setSize(3);
-//        inicializarEstados();
-//        estadosAleat();
-//        actualizarEstadoFinal(3);
-//        ConfTab.setEpsilon((float)0.2);
-//        testMatrizR();
-//        aprendizaje();
-//        testMatrizR();
-//    }
+   
     
     
     // inicializa los arreglos estados, mat1 y mat2 con la long size*size
@@ -225,4 +207,75 @@ public class Matriz {
             return true; // significa que no hay grandes modificaciones en el aprendizaje
         } else return false;
     }
+    
+    
+    
+    //////////////PARA PRUEBAS///////////////////////
+
+    
+//     //escribir la matriz R
+//    public static void testMatrizR(){
+//        System.out.println("Matriz R");
+//        int lado = ConfTab.getSize();
+//	for(int y = 0; y < lado; y++) {
+//		for(int x = 0; x < lado; x++)
+//                        System.out.print(estados[x + y*lado].getRecompensa()+ " ");
+//			
+//		System.out.println();
+//		}
+//    }
+    
+//    public static void main (String[] args){
+//        //ConfTab x = new ConfTab();
+//        ConfTab.setSize(6);
+//        inicializarEstados();
+//        estadosAleat();
+//        actualizarEstadoFinal(3);
+//        //cargarRecompensasTest();
+//        //ConfTab.setEpsilon((float)0.2);
+//        testMatrizR();
+//        ConfTab.setEpisodios(10000);
+//        aprendizaje();
+//        testMatrizR();
+//    }
+//        public static void estadosAleat(){
+//         int lado;
+//         lado = ConfTab.getSize();
+//         Random aleat = new Random();
+//         for (int i = 0; i < lado*lado; i++) {
+//             float numale = aleat.nextFloat();
+//             if (numale<0.2) {
+//                 estados[i].setRecompensa(ConfTab.getrMalo());
+//                 
+//                } else {
+//                 if (numale < 0.4){
+//                     estados[i].setRecompensa(ConfTab.getrPozo());
+//                     
+//                 } else {
+//                     if (numale < 0.6){
+//                         estados[i].setRecompensa(ConfTab.getrNeutro());
+//                     } else {
+//                         if (numale < 0.75){
+//                             estados[i].setRecompensa(ConfTab.getrBueno());
+//                         } else {
+//                             if (numale < 1){
+//                                 estados[i].setRecompensa(ConfTab.getrExc());
+//                             }
+//                         }
+//                     }
+//                 }
+//             }          
+//        }
+//     }
+//        
+//        public static void cargarRecompensasTest(){
+//            estados[0].setRecompensa(ConfTab.getrPozo());
+//            estados[1].setRecompensa(ConfTab.getrNeutro());
+//            estados[2].setRecompensa(ConfTab.getrPozo());
+//            estados[7].setRecompensa(ConfTab.getrMalo());
+//            estados[5].setRecompensa(ConfTab.getrNeutro());
+//            estados[8].setRecompensa(ConfTab.getrBueno());
+//            estados[6].setRecompensa(ConfTab.getrExc());
+//            estados[4].setRecompensa(ConfTab.getrNeutro());
+//        }
 }
