@@ -4,11 +4,16 @@
  */
 package qlearning;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Observer;
 import java.util.Random;
 import javax.swing.BorderFactory;
 //import javax.swing.BorderFactory;
@@ -58,21 +63,22 @@ public class Tablero extends JFrame implements ActionListener {
         buttonGroup2 = new javax.swing.ButtonGroup();
         jFrame1 = new javax.swing.JFrame();
         jPanel1 = new javax.swing.JPanel();
-        comboTipo = new javax.swing.JComboBox();
-        jLabel1 = new javax.swing.JLabel();
-        radioEpsilon = new javax.swing.JRadioButton();
-        radioSoft = new javax.swing.JRadioButton();
-        jLabel2 = new javax.swing.JLabel();
-        btnAleat = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         comboSize = new javax.swing.JComboBox();
+        jLabel5 = new javax.swing.JLabel();
+        btnAleat = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        comboTipo = new javax.swing.JComboBox();
+        jLabel2 = new javax.swing.JLabel();
+        radioEpsilon = new javax.swing.JRadioButton();
+        jLabel4 = new javax.swing.JLabel();
+        spinEps = new javax.swing.JSpinner();
+        radioSoft = new javax.swing.JRadioButton();
+        jLabel3 = new javax.swing.JLabel();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
         btnAprende = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
-        spinEps = new javax.swing.JSpinner();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -87,63 +93,22 @@ public class Tablero extends JFrame implements ActionListener {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Q-learning");
-        setMinimumSize(new java.awt.Dimension(730, 350));
-        setPreferredSize(new java.awt.Dimension(850, 366));
+        setBounds(new java.awt.Rectangle(0, 0, 800, 500));
+        setMinimumSize(new java.awt.Dimension(800, 500));
+        setPreferredSize(new java.awt.Dimension(800, 500));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), javax.swing.BorderFactory.createEtchedBorder()));
+        jPanel1.setMaximumSize(new java.awt.Dimension(500, 500));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 318, Short.MAX_VALUE)
+            .addGap(0, 311, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 318, Short.MAX_VALUE)
+            .addGap(0, 303, Short.MAX_VALUE)
         );
-
-        comboTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Malo", "Bueno", "Excelente", "Pozo", "Inicial", "Final" }));
-        comboTipo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboTipoActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("Tipo de Estado");
-
-        buttonGroup1.add(radioEpsilon);
-        radioEpsilon.setText("e-greedy");
-        radioEpsilon.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioEpsilonActionPerformed(evt);
-            }
-        });
-
-        buttonGroup1.add(radioSoft);
-        radioSoft.setText("Softmax");
-        radioSoft.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioSoftActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setText("Políticas");
-
-        btnAleat.setText("Aleatorio");
-        btnAleat.setEnabled(false);
-        btnAleat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAleatActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setText("Tau");
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setText("є");
-
-        jLabel5.setText("Tipo de Mapa");
 
         jLabel6.setText("Tamaño");
 
@@ -153,6 +118,52 @@ public class Tablero extends JFrame implements ActionListener {
                 comboSizeActionPerformed(evt);
             }
         });
+
+        jLabel5.setText("Tipo de Mapa");
+
+        btnAleat.setText("Aleatorio");
+        btnAleat.setEnabled(false);
+        btnAleat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAleatActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Tipo de Estado");
+
+        comboTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Malo", "Bueno", "Excelente", "Pozo", "Inicial", "Final" }));
+        comboTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboTipoActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Políticas");
+
+        buttonGroup1.add(radioEpsilon);
+        radioEpsilon.setText("e-greedy");
+        radioEpsilon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioEpsilonActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setText("є");
+
+        spinEps.setEnabled(false);
+
+        buttonGroup1.add(radioSoft);
+        radioSoft.setText("Softmax");
+        radioSoft.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioSoftActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Tau");
+
+        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
 
         btnAprende.setText("Aprender");
         btnAprende.addActionListener(new java.awt.event.ActionListener() {
@@ -168,82 +179,95 @@ public class Tablero extends JFrame implements ActionListener {
             }
         });
 
-        spinEps.setEnabled(false);
-
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(comboSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(btnAleat)
+                            .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(radioEpsilon)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel4))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(radioSoft)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jLabel3)))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(spinEps)
+                                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(2, 2, 2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnAprende)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAleat)
+                .addGap(12, 12, 12)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(radioEpsilon)
+                    .addComponent(jLabel4)
+                    .addComponent(spinEps, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(radioSoft)
+                    .addComponent(jLabel3)
+                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAprende)
+                    .addComponent(btnSalir))
+                .addGap(0, 15, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(115, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(comboSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(btnAleat)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAprende)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(radioEpsilon)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(radioSoft)
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel3)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(spinEps, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                            .addComponent(jFormattedTextField1))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(133, 133, 133))
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(271, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAleat)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(radioEpsilon)
-                            .addComponent(jLabel4)
-                            .addComponent(spinEps, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(radioSoft)
-                            .addComponent(jLabel3)
-                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAprende)
-                            .addComponent(btnSalir))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(31, 31, 31))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         jPanel1.getAccessibleContext().setAccessibleName("");
@@ -251,6 +275,58 @@ public class Tablero extends JFrame implements ActionListener {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnAprendeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAprendeActionPerformed
+
+        this.setCursor(Cursor.WAIT_CURSOR);
+        politicaElegida();
+        Matriz.inicializarEstados();
+        finalUnico();
+        matrizR();
+        Matriz.aprendizaje();
+        this.setCursor(Cursor.DEFAULT_CURSOR);
+
+        //mostrarRecorrido();
+
+    }//GEN-LAST:event_btnAprendeActionPerformed
+
+    private void radioSoftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioSoftActionPerformed
+        //        textTau.setEnabled(true);
+        //        textTau.requestFocusInWindow();
+        jFormattedTextField1.setEnabled(true);
+        jFormattedTextField1.requestFocusInWindow();
+        spinEps.setEnabled(false);
+        //        textEpsilon.setText(null);
+        //        textEpsilon.setEnabled(false);
+    }//GEN-LAST:event_radioSoftActionPerformed
+
+    private void radioEpsilonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioEpsilonActionPerformed
+        //textEpsilon.setEnabled(true);
+        //textEpsilon.requestFocusInWindow();
+        spinEps.setEnabled(true);
+        spinEps.requestFocusInWindow();
+        //        textTau.setText(null);
+        //        textTau.setEnabled(false);
+        jFormattedTextField1.setValue(0);
+        jFormattedTextField1.setEnabled(false);
+    }//GEN-LAST:event_radioEpsilonActionPerformed
+
+    private void comboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoActionPerformed
+        tipoDePantalla();
+    }//GEN-LAST:event_comboTipoActionPerformed
+
+    private void btnAleatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAleatActionPerformed
+        aleatorio();//Completar el paso de parametro con el tamaño de tablero
+    }//GEN-LAST:event_btnAleatActionPerformed
+
+    private void comboSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSizeActionPerformed
+        iniciar();
+        btnAleat.setEnabled(true);
+    }//GEN-LAST:event_comboSizeActionPerformed
     
     //Toma el valor de tamaño del tablero desde el comboBox
     private void sizeDePantalla (){
@@ -473,66 +549,17 @@ public class Tablero extends JFrame implements ActionListener {
     
     //Pinta el recorrido aprendido
     public void mostrarRecorrido(){
-        Border redLine = BorderFactory.createLineBorder(Color.RED, 3);
+        Border lineaRoja = BorderFactory.createLineBorder(Color.RED, 3);
         //Iterator it;
         ArrayList elCamino;
         elCamino = Matriz.recorrer();
         //it = elCamino.iterator();
         for (int i = 0; i < elCamino.size(); i++) {
-            estados[(Integer)elCamino.get(i)].setBorder(redLine);
+            estados[(Integer)elCamino.get(i)].setBorder(lineaRoja);
             jPanel1.add(estados[(Integer)elCamino.get(i)], (Integer)elCamino.get(i));
         }
     }
     
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_btnSalirActionPerformed
-
-    private void radioEpsilonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioEpsilonActionPerformed
-        //textEpsilon.setEnabled(true);
-        //textEpsilon.requestFocusInWindow();
-        spinEps.setEnabled(true);
-        spinEps.requestFocusInWindow();
-//        textTau.setText(null);
-//        textTau.setEnabled(false);
-        jFormattedTextField1.setValue(0);
-        jFormattedTextField1.setEnabled(false);
-    }//GEN-LAST:event_radioEpsilonActionPerformed
-
-    private void radioSoftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioSoftActionPerformed
-//        textTau.setEnabled(true);
-//        textTau.requestFocusInWindow();
-        jFormattedTextField1.setEnabled(true);
-        jFormattedTextField1.requestFocusInWindow();
-        spinEps.setEnabled(false);
-//        textEpsilon.setText(null);
-//        textEpsilon.setEnabled(false);
-    }//GEN-LAST:event_radioSoftActionPerformed
-
-    private void btnAleatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAleatActionPerformed
-        aleatorio();//Completar el paso de parametro con el tamaño de tablero
-    }//GEN-LAST:event_btnAleatActionPerformed
-
-    private void comboSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSizeActionPerformed
-        iniciar();
-        btnAleat.setEnabled(true);
-    }//GEN-LAST:event_comboSizeActionPerformed
-
-    private void comboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoActionPerformed
-        tipoDePantalla();
-    }//GEN-LAST:event_comboTipoActionPerformed
-
-    private void btnAprendeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAprendeActionPerformed
-        
-        politicaElegida();
-        Matriz.inicializarEstados();
-        finalUnico();
-        matrizR();
-        Matriz.aprendizaje();
-        //mostrarRecorrido();
-                
-    }//GEN-LAST:event_btnAprendeActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -584,6 +611,7 @@ public class Tablero extends JFrame implements ActionListener {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JRadioButton radioEpsilon;
     private javax.swing.JRadioButton radioSoft;
     private javax.swing.JSpinner spinEps;
