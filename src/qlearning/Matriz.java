@@ -135,7 +135,7 @@ public class Matriz {
                 //posAccion = e.accionAleatoria();
                 float a = estados[e.acciones.get(posAccion).getDestino()].getRecompensa();
                 float b = ConfTab.getGamma();
-                float c = e.acciones.get(e.accionMayorQ()).getValorQ();
+                float c = e.acciones.get(e.posAccionMayorQ()).getValorQ();
                 //nuevoQ = e.getRecompensa()+ConfTab.getGamma()*e.acciones.get(e.accionMayorQ()).getValorQ();
                 nuevoQ = (a + (b*c));
                 e.acciones.get(posAccion).setValorQ(nuevoQ); 
@@ -184,15 +184,16 @@ public class Matriz {
     // se almacena la posicion del estado inicial y también la posicion absoluta del estado final
     public static ArrayList recorrer(){
         ArrayList recorrido = new ArrayList();
-        int posAux = Tablero.posInic;
+        int posEstado = Tablero.posInic;
         int posAccion;
-        while (estados[posAux].getRecompensa()!=ConfTab.getrFin()){
-            recorrido.add(posAux);
-            posAccion = estados[posAux].accionQOptimo(); // se obtiene la posicion de la accion de mayor Q
-            //posAux = estados[posAux].accionMayorQ().getDestino();
-            posAux = estados[posAux].acciones.get(posAccion).getDestino(); // se actualiza posAux
+        while (estados[posEstado].getRecompensa()!=ConfTab.getrFin()){
+            recorrido.add(posEstado);
+            //posAccion = estados[posAux].accionQOptimo(); // se obtiene la posicion de la accion de mayor Q
+            posAccion = estados[posEstado].posAccionMayorQ();
+            posEstado = estados[posEstado].acciones.get(posAccion).getDestino();
+            //posAux = estados[posAux].acciones.get(posAccion).getDestino(); // se actualiza posAux
         }
-        recorrido.add(posAux);
+        recorrido.add(posEstado);
         return recorrido;
     }
     

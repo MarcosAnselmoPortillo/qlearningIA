@@ -39,7 +39,7 @@ public class Estado {
         this.recompensa = recompensa;
     }
     
-    public int accionMayorQ(){
+    public int posAccionMayorQ(){
         int longLista = this.acciones.size();
         //Estado eMayorQ = e.acciones.get(0).destino;
         //Accion aMayorQ = this.getAcciones().get(0);
