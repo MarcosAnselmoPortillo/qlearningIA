@@ -14,7 +14,7 @@ public class ConfTab {
     
     private static int episodios = 50000; //Cantidad de episodios
         
-    private static float rPozo = -1000; //Valor de la recompensa asociada a pozo
+    private static float rPozo = -10; //Valor de la recompensa asociada a pozo
     
     private static float rNeutro = 1; //Valor de la recompensa asociada a un casillero neutro
     
@@ -24,13 +24,15 @@ public class ConfTab {
     
     private static float rExc = 3; //Valor de la recompensa asociada a excelente
     
-    private static float rFin = 1000; //Valor de la recompensa asociada al estado Final
+    private static float rFin = 10; //Valor de la recompensa asociada al estado Final
     
-    public static float gamma = (float) 0.8; // Valor de gamma 
+    public static float gamma = (float) 0.9; // Valor de gamma 
     
     public static float tolerancia; // Valor de la tolerancia entre las variaciones de la matriz Q
 
     public static float valorQ = 100; // Valor por defecto de Q
+    
+    public static long tiempoLimite = 3000000;
 
     public static float getValorQ() {
         return valorQ;

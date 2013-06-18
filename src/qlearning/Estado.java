@@ -40,6 +40,7 @@ public class Estado {
     }
     
     public int posAccionMayorQ(){
+        
         int longLista = this.acciones.size();
         //Estado eMayorQ = e.acciones.get(0).destino;
         //Accion aMayorQ = this.getAcciones().get(0);

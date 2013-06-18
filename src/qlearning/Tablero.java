@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Observer;
 import java.util.Random;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 //import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -34,10 +35,11 @@ public class Tablero extends JFrame implements ActionListener {
      */
     public Tablero() {
         initComponents();
-        panCentro.setSize(350, 350);
+        //panCentro.setSize(350, 350);
         spinEps.setModel(new SpinnerNumberModel(0.1, 0.1, 1.0, 0.05));
-        
-        
+        panGral.setLayout(new BorderLayout());
+        panGral.add(panBot, BorderLayout.WEST);
+        panGral.add(panCentro, BorderLayout.CENTER);
     }
     
     public static String letra = null;
@@ -63,7 +65,7 @@ public class Tablero extends JFrame implements ActionListener {
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
         jFrame1 = new javax.swing.JFrame();
-        panCentro = new javax.swing.JPanel();
+        panGral = new javax.swing.JPanel();
         panBot = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         comboSize = new javax.swing.JComboBox();
@@ -82,9 +84,10 @@ public class Tablero extends JFrame implements ActionListener {
         btnSalir = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         comboTableros = new javax.swing.JComboBox();
-        panDer = new javax.swing.JPanel();
-        panAbajo = new javax.swing.JPanel();
-        panArriba = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        lblAprende = new javax.swing.JLabel();
+        lblCiclo = new javax.swing.JLabel();
+        panCentro = new javax.swing.JPanel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -99,22 +102,12 @@ public class Tablero extends JFrame implements ActionListener {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Q-learning");
+        setAlwaysOnTop(true);
         setBounds(new java.awt.Rectangle(0, 0, 800, 500));
-        setMinimumSize(new java.awt.Dimension(800, 500));
-        setPreferredSize(new java.awt.Dimension(800, 500));
-
-        panCentro.setMaximumSize(new java.awt.Dimension(500, 500));
-
-        javax.swing.GroupLayout panCentroLayout = new javax.swing.GroupLayout(panCentro);
-        panCentro.setLayout(panCentroLayout);
-        panCentroLayout.setHorizontalGroup(
-            panCentroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 311, Short.MAX_VALUE)
-        );
-        panCentroLayout.setVerticalGroup(
-            panCentroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 303, Short.MAX_VALUE)
-        );
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setMinimumSize(new java.awt.Dimension(800, 800));
+        setPreferredSize(new java.awt.Dimension(800, 800));
+        setResizable(false);
 
         jLabel6.setText("Tamaño");
 
@@ -200,6 +193,17 @@ public class Tablero extends JFrame implements ActionListener {
             }
         });
 
+        jButton1.setText("Limpiar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        lblAprende.setText("Aprendiendo..");
+
+        lblCiclo.setText("0");
+
         javax.swing.GroupLayout panBotLayout = new javax.swing.GroupLayout(panBot);
         panBot.setLayout(panBotLayout);
         panBotLayout.setHorizontalGroup(
@@ -209,38 +213,46 @@ public class Tablero extends JFrame implements ActionListener {
                 .addGroup(panBotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panBotLayout.createSequentialGroup()
+                        .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panBotLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(panBotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panBotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panBotLayout.createSequentialGroup()
-                                    .addGroup(panBotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel5)
-                                        .addComponent(comboSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jLabel1)
-                                        .addComponent(jLabel2)
-                                        .addComponent(btnAleat)
-                                        .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(panBotLayout.createSequentialGroup()
-                                            .addGroup(panBotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(panBotLayout.createSequentialGroup()
-                                                    .addComponent(radioEpsilon)
-                                                    .addGap(18, 18, 18)
-                                                    .addComponent(jLabel4))
-                                                .addGroup(panBotLayout.createSequentialGroup()
-                                                    .addComponent(radioSoft)
-                                                    .addGap(10, 10, 10)
-                                                    .addComponent(jLabel3)))
-                                            .addGap(18, 18, 18)
-                                            .addGroup(panBotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(spinEps)
-                                                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGap(2, 2, 2))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panBotLayout.createSequentialGroup()
-                                    .addComponent(btnAprende)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(comboTableros, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jLabel5)
+                            .addComponent(comboSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(btnAleat)
+                            .addGroup(panBotLayout.createSequentialGroup()
+                                .addGroup(panBotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panBotLayout.createSequentialGroup()
+                                        .addComponent(radioEpsilon)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel4))
+                                    .addGroup(panBotLayout.createSequentialGroup()
+                                        .addComponent(radioSoft)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jLabel3)))
+                                .addGap(18, 18, 18)
+                                .addGroup(panBotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(spinEps)
+                                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(2, 2, 2))
+                    .addGroup(panBotLayout.createSequentialGroup()
+                        .addGroup(panBotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboTableros, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panBotLayout.createSequentialGroup()
+                                .addComponent(btnAprende)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panBotLayout.createSequentialGroup()
+                        .addComponent(lblAprende)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblCiclo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(19, 19, 19)))
                 .addContainerGap())
         );
         panBotLayout.setVerticalGroup(
@@ -256,7 +268,9 @@ public class Tablero extends JFrame implements ActionListener {
                 .addGap(12, 12, 12)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panBotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -273,89 +287,66 @@ public class Tablero extends JFrame implements ActionListener {
                 .addComponent(btnGuardar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboTableros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(10, 10, 10)
+                .addGroup(panBotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAprende)
+                    .addComponent(lblCiclo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panBotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAprende)
-                    .addComponent(btnSalir))
-                .addGap(20, 20, 20))
+                    .addComponent(btnSalir)))
         );
 
-        javax.swing.GroupLayout panDerLayout = new javax.swing.GroupLayout(panDer);
-        panDer.setLayout(panDerLayout);
-        panDerLayout.setHorizontalGroup(
-            panDerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
+        panCentro.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panCentro.setMaximumSize(new java.awt.Dimension(500, 500));
+
+        javax.swing.GroupLayout panCentroLayout = new javax.swing.GroupLayout(panCentro);
+        panCentro.setLayout(panCentroLayout);
+        panCentroLayout.setHorizontalGroup(
+            panCentroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 419, Short.MAX_VALUE)
         );
-        panDerLayout.setVerticalGroup(
-            panDerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        panCentroLayout.setVerticalGroup(
+            panCentroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 349, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout panAbajoLayout = new javax.swing.GroupLayout(panAbajo);
-        panAbajo.setLayout(panAbajoLayout);
-        panAbajoLayout.setHorizontalGroup(
-            panAbajoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        javax.swing.GroupLayout panGralLayout = new javax.swing.GroupLayout(panGral);
+        panGral.setLayout(panGralLayout);
+        panGralLayout.setHorizontalGroup(
+            panGralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panGralLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(panBot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(panCentro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(62, Short.MAX_VALUE))
         );
-        panAbajoLayout.setVerticalGroup(
-            panAbajoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
+        panGralLayout.setVerticalGroup(
+            panGralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panGralLayout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addGroup(panGralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panCentro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panBot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout panArribaLayout = new javax.swing.GroupLayout(panArriba);
-        panArriba.setLayout(panArribaLayout);
-        panArribaLayout.setHorizontalGroup(
-            panArribaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        panArribaLayout.setVerticalGroup(
-            panArribaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
+        panCentro.getAccessibleContext().setAccessibleName("");
+        panCentro.getAccessibleContext().setAccessibleDescription("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panArriba, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(panBot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(panCentro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-                        .addComponent(panDer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(panAbajo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(panGral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panArriba, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panDer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(47, 47, 47))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 62, Short.MAX_VALUE)
-                                .addComponent(panCentro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(panBot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(panAbajo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                .addComponent(panGral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
-
-        panCentro.getAccessibleContext().setAccessibleName("");
-        panCentro.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -365,7 +356,7 @@ public class Tablero extends JFrame implements ActionListener {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnAprendeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAprendeActionPerformed
-
+        
         this.setCursor(Cursor.WAIT_CURSOR);
         politicaElegida();
         Matriz.inicializarEstados();
@@ -420,6 +411,10 @@ public class Tablero extends JFrame implements ActionListener {
     private void comboTablerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTablerosActionPerformed
         redibujar();
     }//GEN-LAST:event_comboTablerosActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        limpiarTablero();
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     //Toma el valor de tamaño del tablero desde el comboBox
     private void sizeDePantalla (){
@@ -542,19 +537,13 @@ public class Tablero extends JFrame implements ActionListener {
 //                estados[i][j] = temp;
         }
         panCentro.setVisible(true);
-        jFrame1.setLayout(new BorderLayout());
-        jFrame1.add(panBot, BorderLayout.WEST);
-        jFrame1.add(panCentro, BorderLayout.CENTER);
-        jFrame1.add(panDer, BorderLayout.EAST);
-        jFrame1.add(panAbajo, BorderLayout.SOUTH);
-        jFrame1.add(panArriba, BorderLayout.NORTH);
-        jFrame1.pack();
-        jFrame1.setVisible(true);
+        
+        
     }
     
     //Pinta un tablero definiendo los tipos de estado aleatoriamente
     public void aleatorio(){
-        
+
         int size = ConfTab.getSize();
         for (int i = 0; i < size*size; i++) {
             float x = new Random().nextFloat();
@@ -599,7 +588,7 @@ public class Tablero extends JFrame implements ActionListener {
         posFinal = y;
         panCentro.remove(y);
         panCentro.add(estados[y], y);
-        //jPanel1.setVisible(true);
+        //panCentro.setVisible(true);
     } 
     
     public void redibujar(){
@@ -611,6 +600,7 @@ public class Tablero extends JFrame implements ActionListener {
             panCentro.add(tablero[i]);
         }
         panCentro.repaint();
+        jFrame1.pack();
         panCentro.setVisible(true);
         
     }
@@ -648,6 +638,15 @@ public class Tablero extends JFrame implements ActionListener {
         }
     }
     
+    public void limpiarTablero(){
+        panCentro.removeAll();
+        int x = estados.length;
+        for (int i = 0; i < x; i++) {
+            estados[i].removeAll();
+        }
+        iniciar();
+    }
+    
     //Verifica que el final sea unico
     public Boolean finalUnico(){
         Boolean flag = true;
@@ -680,9 +679,9 @@ public class Tablero extends JFrame implements ActionListener {
         elCamino = Matriz.recorrer();
         //it = elCamino.iterator();
         for (int i = 0; i < elCamino.size(); i++) {
-            estados[(Integer)elCamino.get(i)].setBorder(lineaRoja);
-            panCentro.remove((Integer)elCamino.get(i));
-            panCentro.add(estados[(Integer)elCamino.get(i)], (Integer)elCamino.get(i));
+            estados[(int)elCamino.get(i)].setBorder(lineaRoja);
+            panCentro.remove((int) elCamino.get(i));
+            panCentro.add(estados[(int)elCamino.get(i)], (int)elCamino.get(i));
         }
     }
     
@@ -735,6 +734,7 @@ public class Tablero extends JFrame implements ActionListener {
     private javax.swing.JComboBox comboSize;
     private javax.swing.JComboBox comboTableros;
     private javax.swing.JComboBox comboTipo;
+    private javax.swing.JButton jButton1;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
@@ -743,11 +743,11 @@ public class Tablero extends JFrame implements ActionListener {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel panAbajo;
-    private javax.swing.JPanel panArriba;
+    private javax.swing.JLabel lblAprende;
+    private javax.swing.JLabel lblCiclo;
     private javax.swing.JPanel panBot;
     private javax.swing.JPanel panCentro;
-    private javax.swing.JPanel panDer;
+    private javax.swing.JPanel panGral;
     private javax.swing.JRadioButton radioEpsilon;
     private javax.swing.JRadioButton radioSoft;
     private javax.swing.JSpinner spinEps;

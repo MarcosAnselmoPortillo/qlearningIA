@@ -116,13 +116,14 @@ public class Matriz {
      }
   
     public static void aprendizaje(){
+//        long tiempoInicio = System.currentTimeMillis(); // Para controlar el tiempo
         Random aleat = new Random();
         Politica p = new Politica();
         int i = 0;
         float nuevoQ;
         while (i < ConfTab.getEpisodios() && !compMatQ){
             int indice = ConfTab.getSize()*ConfTab.getSize();
-            int posAleat = aleat.nextInt(indice - 1);
+            int posAleat = aleat.nextInt(indice);
             Estado e = estados[posAleat];
             int posAccion ;
             
@@ -133,16 +134,21 @@ public class Matriz {
                     posAccion = p.softmax(e);
                 }
                 //posAccion = e.accionAleatoria();
-                float a = estados[e.acciones.get(posAccion).getDestino()].getRecompensa();
+                //float a = estados[e.acciones.get(posAccion).getDestino()].getRecompensa();
+                float a = e.getRecompensa();
                 float b = ConfTab.getGamma();
-                float c = e.acciones.get(e.posAccionMayorQ()).getValorQ();
+                float c = e.acciones.get(posAccion).getValorQ();
+                //float c = e.acciones.get(e.posAccionMayorQ()).getValorQ();
                 //nuevoQ = e.getRecompensa()+ConfTab.getGamma()*e.acciones.get(e.accionMayorQ()).getValorQ();
                 nuevoQ = (a + (b*c));
                 e.acciones.get(posAccion).setValorQ(nuevoQ); 
                 if (e.getRecompensa()== ConfTab.getrPozo()){
                     break;
                 }
-                e = estados[e.acciones.get(posAccion).getDestino()];             
+                e = estados[e.acciones.get(posAccion).getDestino()];
+//                long transcurrido = System.currentTimeMillis() - tiempoInicio;		
+//		if(transcurrido > ConfTab.tiempoLimite)
+//			return;
             } while (e.getRecompensa() != ConfTab.getrFin());
             i++;
             //compMatQ = compararMatricesQ();
@@ -188,7 +194,7 @@ public class Matriz {
         int posAccion;
         while (estados[posEstado].getRecompensa()!=ConfTab.getrFin()){
             recorrido.add(posEstado);
-            //posAccion = estados[posAux].accionQOptimo(); // se obtiene la posicion de la accion de mayor Q
+            //posAccion = estados[posEstado].accionQOptimo(); // se obtiene la posicion de la accion de mayor Q
             posAccion = estados[posEstado].posAccionMayorQ();
             posEstado = estados[posEstado].acciones.get(posAccion).getDestino();
             //posAux = estados[posAux].acciones.get(posAccion).getDestino(); // se actualiza posAux
