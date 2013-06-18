@@ -12,13 +12,13 @@ public class ConfTab {
     
     public static double tau = -1; //Valor de temperatura
     
-    private static int episodios = 1000000; //Cantidad de episodios
+    private static int episodios = 1000; //Cantidad de episodios
         
     private static float rPozo = -1000; //Valor de la recompensa asociada a pozo
     
-    private static float rNeutro = 0; //Valor de la recompensa asociada a un casillero neutro
+    private static float rNeutro = 1; //Valor de la recompensa asociada a un casillero neutro
     
-    private static float rMalo = 1; //Valor de la recompensa asociada a malo
+    private static float rMalo = 0; //Valor de la recompensa asociada a malo
     
     private static float rBueno = 5; //Valor de la recompensa asociada a bueno
     
