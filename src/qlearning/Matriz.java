@@ -153,11 +153,11 @@ public class Matriz {
         //con destino a sí mismo y valor Q ConfTab.valorQ   
     public static void actualizarEstadoFinal(int posAbs){
         estados[posAbs].setRecompensa(ConfTab.getrFin()); //agregado sólo para probar desde aca
-//        estados[posAbs].acciones.clear();
-//        Accion a = new Accion();
-//        a.setDestino(posAbs);
-//        a.setValorQ(0);
-//        estados[posAbs].acciones.add(a);
+        estados[posAbs].acciones.clear();
+        Accion a = new Accion();
+        a.setDestino(posAbs);
+        a.setValorQ(0);
+        estados[posAbs].acciones.add(a);
     }
     
    

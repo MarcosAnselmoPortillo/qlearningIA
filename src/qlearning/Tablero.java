@@ -519,6 +519,7 @@ public class Tablero extends JFrame implements ActionListener {
                             estados[posFinal].setText("");
                             panCentro.remove(posFinal);
                             panCentro.add(estados[posFinal], posFinal);
+                            
                         }
                     }
                     if ("Inicial".equals(tipoDePantalla())){
@@ -633,7 +634,12 @@ public class Tablero extends JFrame implements ActionListener {
                             if ("Final".equals(estados[i].getText())){
                                 Matriz.estados[i].setRecompensa(ConfTab.getrFin());
                                 Matriz.actualizarEstadoFinal(i);
+                                posFinal = i;
                             } else
+                                if ("Inicial".equals(estados[i].getText())) {
+                                    Matriz.estados[i].setRecompensa(ConfTab.getrNeutro());
+                                    posInic = i;
+                            }else
                                 Matriz.estados[i].setRecompensa(ConfTab.getrNeutro());
                         }
                     }
@@ -675,6 +681,7 @@ public class Tablero extends JFrame implements ActionListener {
         //it = elCamino.iterator();
         for (int i = 0; i < elCamino.size(); i++) {
             estados[(Integer)elCamino.get(i)].setBorder(lineaRoja);
+            panCentro.remove((Integer)elCamino.get(i));
             panCentro.add(estados[(Integer)elCamino.get(i)], (Integer)elCamino.get(i));
         }
     }
