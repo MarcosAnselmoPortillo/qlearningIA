@@ -591,6 +591,7 @@ public class Tablero extends JFrame implements ActionListener {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         limpiarTablero();
+        btnAprende.setEnabled(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void spinEpsFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spinEpsFocusGained
