@@ -196,7 +196,8 @@ public class Tablero extends JFrame implements ActionListener {
             }
         });
 
-        btnAprende.setText("Aprender");
+        btnAprende.setText("Iniciar");
+        btnAprende.setToolTipText("");
         btnAprende.setEnabled(false);
         btnAprende.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -592,6 +593,11 @@ public class Tablero extends JFrame implements ActionListener {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         limpiarTablero();
         btnAprende.setEnabled(false);
+        radioEpsilon.setSelected(false);
+        radioSoft.setSelected(false);
+        textTau.setValue(0);
+        textTau.setEnabled(false);
+        spinEps.setEnabled(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void spinEpsFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spinEpsFocusGained
