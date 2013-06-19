@@ -400,11 +400,9 @@ public class Tablero extends JFrame implements ActionListener {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void comboTablerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTablerosActionPerformed
-//        for (int i = 0; i < estados.length; i++) {
-//            estados[i].setBorder(BorderFactory.createEmptyBorder());
-//        }
-//        ConfTab.setSize((int) Math.sqrt(estados.length));
         redibujar();
+        int a = (int) Math.sqrt(estados.length);
+        ConfTab.setSize(a);
     }//GEN-LAST:event_comboTablerosActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -600,7 +598,10 @@ public class Tablero extends JFrame implements ActionListener {
         int x = (int) Math.sqrt(tablero.length);
         panCentro.removeAll();
         panCentro.setLayout(new GridLayout(x, x));
+        estados = new JButton[tablero.length];
         for (int i = 0; i < tablero.length; i++) {
+            tablero[i].setBorder(BorderFactory.createEmptyBorder());
+            estados[i] = tablero[i];
             panCentro.add(tablero[i]);
         }
         panCentro.repaint();
