@@ -45,11 +45,12 @@ public class Estado {
         //Estado eMayorQ = e.acciones.get(0).destino;
         //Accion aMayorQ = this.getAcciones().get(0);
         int posAccion = 0;
-        float valorQresg = acciones.get(0).valorQ;
+        float valorQresg = 0;
         for (int i = 0 ; i < longLista;i++){
             if (acciones.get(i).valorQ > valorQresg){
                     //posAccion = acciones.get(i).;
                     posAccion = i;
+                    valorQresg = acciones.get(i).valorQ;
             }
         }        
         return posAccion;

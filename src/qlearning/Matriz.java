@@ -116,17 +116,18 @@ public class Matriz {
      }
   
     public static void aprendizaje(){
-//        long tiempoInicio = System.currentTimeMillis(); // Para controlar el tiempo
+        long tiempoInicio = System.currentTimeMillis(); // Para controlar el tiempo
         Random aleat = new Random();
         Politica p = new Politica();
-        int i = 0;
+        int i = 0; 
         float nuevoQ;
+       
         while (i < ConfTab.getEpisodios() && !compMatQ){
             int indice = ConfTab.getSize()*ConfTab.getSize();
             int posAleat = aleat.nextInt(indice);
             Estado e = estados[posAleat];
             int posAccion ;
-            
+            boolean trancada = false;
             do {
                 if (ConfTab.getEpsilon()!= -1) {
                     posAccion = p.eGreedy(e);
@@ -134,23 +135,31 @@ public class Matriz {
                     posAccion = p.softmax(e);
                 }
                 //posAccion = e.accionAleatoria();
-                //float a = estados[e.acciones.get(posAccion).getDestino()].getRecompensa();
-                float a = e.getRecompensa();
+                float a = estados[e.acciones.get(posAccion).getDestino()].getRecompensa();
+                //float a = e.getRecompensa();
                 float b = ConfTab.getGamma();
-                float c = e.acciones.get(posAccion).getValorQ();
+                int aux = e.acciones.get(posAccion).getDestino();
+                float c = estados[aux].acciones.get(estados[aux].posAccionMayorQ()).getValorQ();
                 //float c = e.acciones.get(e.posAccionMayorQ()).getValorQ();
                 //nuevoQ = e.getRecompensa()+ConfTab.getGamma()*e.acciones.get(e.accionMayorQ()).getValorQ();
                 nuevoQ = (a + (b*c));
                 e.acciones.get(posAccion).setValorQ(nuevoQ); 
                 if (e.getRecompensa()== ConfTab.getrPozo()){
-                    break;
+                   e.acciones.get(posAccion).setValorQ(-100000);
+                   break;
                 }
                 e = estados[e.acciones.get(posAccion).getDestino()];
-//                long transcurrido = System.currentTimeMillis() - tiempoInicio;		
-//		if(transcurrido > ConfTab.tiempoLimite)
-//			return;
-            } while (e.getRecompensa() != ConfTab.getrFin());
+                long transcurrido = System.currentTimeMillis() - tiempoInicio;		
+		if(transcurrido > ConfTab.tiempoLimite)
+			trancada = true;
+            } while (e.getRecompensa() != ConfTab.getrFin() && !trancada);
             i++;
+            System.out.println("numero de episodio" + i);
+//            if ((i%50) == 0) {
+//                for (int j = 0; j < estados.length; j++) {
+//                    reducirQ(estados[j]);
+//                }
+//            }
             //compMatQ = compararMatricesQ();
         }
     }
@@ -162,12 +171,18 @@ public class Matriz {
         estados[posAbs].acciones.clear();
         Accion a = new Accion();
         a.setDestino(posAbs);
-        a.setValorQ(0);
+        a.setValorQ(ConfTab.valorQ);
         estados[posAbs].acciones.add(a);
     }
     
-   
     
+    public static  void reducirQ(Estado estado){
+        int x = estado.acciones.size();
+        for (int i = 0; i < x; i++) {
+            float qAnt = estado.acciones.get(i).getValorQ();
+            estado.acciones.get(i).setValorQ((float) (qAnt*0.1));
+        }
+    }    
     
     // inicializa los arreglos estados, mat1 y mat2 con la long size*size
     // agrega un estado a cada posicion del vector estados
@@ -192,11 +207,13 @@ public class Matriz {
         ArrayList recorrido = new ArrayList();
         int posEstado = Tablero.posInic;
         int posAccion;
+        System.out.println("Estados visitados:" + posEstado);
         while (estados[posEstado].getRecompensa()!=ConfTab.getrFin()){
             recorrido.add(posEstado);
             //posAccion = estados[posEstado].accionQOptimo(); // se obtiene la posicion de la accion de mayor Q
             posAccion = estados[posEstado].posAccionMayorQ();
             posEstado = estados[posEstado].acciones.get(posAccion).getDestino();
+            System.out.println("Estados visitados:" + posEstado);
             //posAux = estados[posAux].acciones.get(posAccion).getDestino(); // se actualiza posAux
         }
         recorrido.add(posEstado);
