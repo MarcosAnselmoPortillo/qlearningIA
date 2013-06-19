@@ -28,7 +28,7 @@ public class ConfTab {
     
     public static float gamma = (float) 0.5; // Valor de gamma 
     
-    public static float tolerancia; // Valor de la tolerancia entre las variaciones de la matriz Q
+    public static float tolerancia = (float)0.001; // Valor de la tolerancia entre las variaciones de la matriz Q
 
     public static float valorQ = 100; // Valor por defecto de Q
     
