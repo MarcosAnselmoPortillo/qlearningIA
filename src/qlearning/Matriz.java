@@ -19,9 +19,9 @@ public class Matriz {
    
     public static Estado[] estados; //Arreglo de elementos tipo Estado  
     
-    public static float[] mat1;
+    public static float[] matQAnt;
     
-    public static float[] mat2;
+    public static float[] matQSig;
     
     public static boolean compMatQ = false;
     /**
@@ -121,7 +121,7 @@ public class Matriz {
         Politica p = new Politica();
         int i = 0; 
         float nuevoQ;
-       
+        inicializarMatQ();
         while (i < ConfTab.getEpisodios() && !compMatQ){
             int indice = ConfTab.getSize()*ConfTab.getSize();
             int posAleat = aleat.nextInt(indice);
@@ -160,14 +160,24 @@ public class Matriz {
 //                    reducirQ(estados[j]);
 //                }
 //            }
-            //compMatQ = compararMatricesQ();
+            if ((i%100) == 0){ 
+                testMatrizQ(matQAnt);
+                testMatrizQ(matQSig);
+                cargarValoresQ();
+                testMatrizQ(matQAnt);
+                compMatQ = compararMatricesQ();
+                System.arraycopy(matQSig, 0, matQAnt, 0, estados.length);
+                if (compMatQ) {
+                    System.out.println("Episodio en que se estabiliza: " + i);
+                }
+            }
         }
     }
     
         //borra la lista de acciones del estado final y agrega una única accion
         //con destino a sí mismo y valor Q ConfTab.valorQ   
     public static void actualizarEstadoFinal(int posAbs){
-        estados[posAbs].setRecompensa(ConfTab.getrFin()); //agregado sólo para probar desde aca
+        //estados[posAbs].setRecompensa(ConfTab.getrFin()); //agregado sólo para probar desde aca
         estados[posAbs].acciones.clear();
         Accion a = new Accion();
         a.setDestino(posAbs);
@@ -176,27 +186,36 @@ public class Matriz {
     }
     
     
-    public static  void reducirQ(Estado estado){
-        int x = estado.acciones.size();
-        for (int i = 0; i < x; i++) {
-            float qAnt = estado.acciones.get(i).getValorQ();
-            estado.acciones.get(i).setValorQ((float) (qAnt*0.1));
-        }
-    }    
+//    public static  void reducirQ(Estado estado){
+//        int x = estado.acciones.size();
+//        for (int i = 0; i < x; i++) {
+//            float qAnt = estado.acciones.get(i).getValorQ();
+//            estado.acciones.get(i).setValorQ((float) (qAnt*0.1));
+//        }
+//    }    
     
     // inicializa los arreglos estados, mat1 y mat2 con la long size*size
     // agrega un estado a cada posicion del vector estados
     public static void cargarEstados(){
         estados = new Estado[ConfTab.getSize()*ConfTab.getSize()];
-        mat1 = new float[ConfTab.getSize()*ConfTab.getSize()];
-        mat2 = new float[ConfTab.getSize()*ConfTab.getSize()];
+        //vectores para comparación de matrices Q
+        
         for (int i = 0;i<estados.length;i++){
             Estado e = new Estado();
             e.setPosAbs(i);
             e.setRecompensa(0);
             estados[i]= e;
-            mat1[i] = ConfTab.valorQ;
-            mat2[i] = ConfTab.valorQ;
+            
+        }
+    }
+    
+    public static void inicializarMatQ (){
+        compMatQ = false;
+        matQAnt = new float[ConfTab.getSize()*ConfTab.getSize()];
+        matQSig = new float[ConfTab.getSize()*ConfTab.getSize()];
+        for (int i = 0; i < matQSig.length; i++) {
+            matQAnt[i] = ConfTab.valorQ;
+            matQSig[i] = ConfTab.valorQ;
         }
     }
     
@@ -204,18 +223,28 @@ public class Matriz {
     // se guarda la posición del estado actual en un ArrayList para saber cuál es el camino recorrido
     // se almacena la posicion del estado inicial y también la posicion absoluta del estado final
     public static ArrayList recorrer(){
+        long tiempoInicio = System.currentTimeMillis(); // Para controlar el tiempo
         ArrayList recorrido = new ArrayList();
         int posEstado = Tablero.posInic;
         int posAccion;
         System.out.println("Estados visitados:" + posEstado);
-        while (estados[posEstado].getRecompensa()!=ConfTab.getrFin()){
+        boolean acorralado = false;
+        while (estados[posEstado].getRecompensa()!=ConfTab.getrFin() && !acorralado){
             recorrido.add(posEstado);
-            //posAccion = estados[posEstado].accionQOptimo(); // se obtiene la posicion de la accion de mayor Q
             posAccion = estados[posEstado].posAccionMayorQ();
             posEstado = estados[posEstado].acciones.get(posAccion).getDestino();
             System.out.println("Estados visitados:" + posEstado);
-            //posAux = estados[posAux].acciones.get(posAccion).getDestino(); // se actualiza posAux
+            long transcurrido = System.currentTimeMillis() - tiempoInicio;		
+            if(transcurrido > (ConfTab.tiempoLimite)){
+                acorralado = true;
+                System.out.println("se cortó por tiempo en el recorrido");
+            }
+			
+            
         }
+        if (acorralado){
+            recorrido.clear();
+        } else
         recorrido.add(posEstado);
         return recorrido;
     }
@@ -226,18 +255,26 @@ public class Matriz {
     public static boolean compararMatricesQ (){
         float error = 0;
         float diferencia;
+        System.out.println("Matriz q siguiente: " + matQSig.toString());
+        System.out.println("Matriz q anterior: " + matQAnt.toString());
         for (int i = 0;i<estados.length;i++){
-            diferencia = mat1[i]-mat2[i];
-            error += (Math.pow(2, diferencia))/2;
-            
+            diferencia = matQSig[i]- matQAnt[i];
+            error += (Math.pow(diferencia,2))/2;    
         }
+        System.out.println("error: " + error);
         if (error <= ConfTab.getTolerancia()) { 
             return true; // significa que no hay grandes modificaciones en el aprendizaje
         } else return false;
     }
     
+    public static void cargarValoresQ () {
+        for (int i = 0;i < matQSig.length;i++) {
+            int posAccion = estados[i].posAccionMayorQ();
+            matQSig[i]= estados[i].acciones.get(posAccion).getValorQ();
+        }
+    }
     
-    
+ 
     //////////////PARA PRUEBAS///////////////////////
 
     
@@ -306,4 +343,18 @@ public class Matriz {
 //            estados[6].setRecompensa(ConfTab.getrExc());
 //            estados[4].setRecompensa(ConfTab.getrNeutro());
 //        }
+
+         //escribir la matriz Q
+    public static void testMatrizQ(float[] matriz){
+        System.out.println("Matriz Q");
+        int lado = ConfTab.getSize();
+	for(int y = 0; y < lado; y++) {
+		for(int x = 0; x < lado; x++)
+                        System.out.print(" " +matriz[x + y*lado] + " ");
+			
+		System.out.println();
+		}
+    }
+
 }
+
