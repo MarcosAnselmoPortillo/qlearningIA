@@ -231,6 +231,7 @@ public class Matriz {
         boolean acorralado = false;
         if (rodeadoPozos()) {
             recorrido.clear();
+            acorralado = true;
         } else {
             while (estados[posEstado].getRecompensa()!=ConfTab.getrFin() && !acorralado){
                 recorrido.add(posEstado);
