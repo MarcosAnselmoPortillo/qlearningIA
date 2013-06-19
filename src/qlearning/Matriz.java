@@ -161,10 +161,10 @@ public class Matriz {
 //                }
 //            }
             if ((i%100) == 0){ 
-                testMatrizQ(matQAnt);
-                testMatrizQ(matQSig);
+                //testMatrizQ(matQAnt);
+                //testMatrizQ(matQSig);
                 cargarValoresQ();
-                testMatrizQ(matQAnt);
+                //testMatrizQ(matQAnt);
                 compMatQ = compararMatricesQ();
                 System.arraycopy(matQSig, 0, matQAnt, 0, estados.length);
                 if (compMatQ) {
@@ -229,24 +229,26 @@ public class Matriz {
         int posAccion;
         System.out.println("Estados visitados:" + posEstado);
         boolean acorralado = false;
-        while (estados[posEstado].getRecompensa()!=ConfTab.getrFin() && !acorralado){
-            recorrido.add(posEstado);
-            posAccion = estados[posEstado].posAccionMayorQ();
-            posEstado = estados[posEstado].acciones.get(posAccion).getDestino();
-            System.out.println("Estados visitados:" + posEstado);
-            long transcurrido = System.currentTimeMillis() - tiempoInicio;		
-            if(transcurrido > (ConfTab.tiempoLimite)){
-                acorralado = true;
-                System.out.println("se cortó por tiempo en el recorrido");
+        if (rodeadoPozos()) {
+            recorrido.clear();
+        } else {
+            while (estados[posEstado].getRecompensa()!=ConfTab.getrFin() && !acorralado){
+                recorrido.add(posEstado);
+                posAccion = estados[posEstado].posAccionMayorQ();
+                posEstado = estados[posEstado].acciones.get(posAccion).getDestino();
+                System.out.println("Estados visitados:" + posEstado);
+                long transcurrido = System.currentTimeMillis() - tiempoInicio;		
+                if(transcurrido > (ConfTab.tiempoLimite)){
+                    acorralado = true;
+                    System.out.println("se cortó por tiempo en el recorrido");
+                }
             }
-			
-            
         }
         if (acorralado){
             recorrido.clear();
-        } else
-        recorrido.add(posEstado);
+        } else recorrido.add(posEstado);
         return recorrido;
+        
     }
     
     // compara los valores q. 
@@ -274,6 +276,19 @@ public class Matriz {
         }
     }
     
+    public static boolean rodeadoPozos(){
+        int cantidadPozos = 0;
+        int posEstadoDestino;
+        for (int i = 0; i < estados[Tablero.posInic].acciones.size(); i++) {
+            posEstadoDestino = estados[Tablero.posInic].acciones.get(i).getDestino();
+            if (estados[posEstadoDestino].getRecompensa()==ConfTab.getrPozo()) {
+                cantidadPozos++;
+            }
+        }
+        if (cantidadPozos == estados[Tablero.posInic].acciones.size()) {
+            return true;
+        } else return false;
+    }
  
     //////////////PARA PRUEBAS///////////////////////
 
