@@ -33,6 +33,14 @@ public class Tablero extends JFrame implements ActionListener {
         this.setExtendedState(this.MAXIMIZED_BOTH);
         //panCentro.setSize(350, 350);
         spinEps.setModel(new SpinnerNumberModel(0.1, 0.1, 1.0, 0.05));
+        textBueno.setText(String.valueOf(ConfTab.getrBueno()));
+        textMalo.setText(String.valueOf(ConfTab.getrMalo()));
+        textExc.setText(String.valueOf(ConfTab.getrExc()));
+        textPozo.setText(String.valueOf(ConfTab.getrPozo()));
+        textFinal.setText(String.valueOf(ConfTab.getrFin()));
+        textNeutro.setText(String.valueOf(ConfTab.getrNeutro()));
+        textEp.setText(String.valueOf(ConfTab.getEpisodios()));
+        textGamma.setText(String.valueOf(ConfTab.getGamma()));
         panGral.setLayout(new BorderLayout());
         panGral.add(panBot, BorderLayout.WEST);
         panGral.add(panCentro, BorderLayout.CENTER);
