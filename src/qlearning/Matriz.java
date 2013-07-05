@@ -136,8 +136,8 @@ public class Matriz {
                     posAccion = p.softmax(e);
                 }
                 //posAccion = e.accionAleatoria();
-                float a = estados[e.acciones.get(posAccion).getDestino()].getRecompensa();
-                //float a = e.getRecompensa();
+                //float a = estados[e.acciones.get(posAccion).getDestino()].getRecompensa();
+                float a = e.getRecompensa();
                 float b = ConfTab.getGamma();
                 int aux = e.acciones.get(posAccion).getDestino();
                 float c = estados[aux].acciones.get(estados[aux].posAccionMayorQ()).getValorQ();
@@ -146,7 +146,7 @@ public class Matriz {
                 nuevoQ = (a + (b*c));
                 e.acciones.get(posAccion).setValorQ(nuevoQ); 
                 if (e.getRecompensa()== ConfTab.getrPozo()){
-                   e.acciones.get(posAccion).setValorQ(-100000);
+                   //e.acciones.get(posAccion).setValorQ(-100000);
                    break;
                 }
                 e = estados[e.acciones.get(posAccion).getDestino()];
@@ -231,7 +231,6 @@ public class Matriz {
         System.out.println("Estados visitados:" + posEstado);
         boolean acorralado = false;
         if (rodeadoPozos()) {
-            recorrido.clear();
             acorralado = true;
         } else {
             while (estados[posEstado].getRecompensa()!=ConfTab.getrFin() && !acorralado){

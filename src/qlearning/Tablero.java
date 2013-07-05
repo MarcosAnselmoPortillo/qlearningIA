@@ -545,8 +545,8 @@ public class Tablero extends JFrame implements ActionListener {
         finalUnico();
         matrizR();
         Matriz.aprendizaje();
-        this.setCursor(Cursor.DEFAULT_CURSOR);
         mostrarRecorrido();
+        this.setCursor(Cursor.DEFAULT_CURSOR);
 
     }//GEN-LAST:event_btnAprendeActionPerformed
 
@@ -640,7 +640,7 @@ public class Tablero extends JFrame implements ActionListener {
         ConfTab.setGamma(Float.parseFloat(textGamma.getText()));
     }//GEN-LAST:event_textGammaFocusLost
     
-    //Toma el valor de tama�o del tablero desde el comboBox
+    //Toma el valor de tamaño del tablero desde el comboBox
     private void sizeDePantalla (){
         int size= 0;
         String aux = (String)comboSize.getSelectedItem();
