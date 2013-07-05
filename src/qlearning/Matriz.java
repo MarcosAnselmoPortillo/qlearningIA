@@ -26,18 +26,21 @@ public class Matriz {
     
     public static boolean compMatQ = false;
     /**
-    * Se inicializan todos los estados a neutro
-    * para despues poder cambiar a mano los necesarios
+    * Se agregan todas las acciones posibles que cada estado puede realizar y se setea
+    * el valor de Q incial en cada acción.
+    * En cada posición del arreglo de estados, se comprueba cuáles de los 8 movimientos
+    * posibles puede realizar ese estado. Se comprueban los movimientos en la siguiente
+    * secuencia: NorOeste (NO), Norte (N), NorEste(NE), Este (E), SurEste (E), Sur (S),
+    * SurOeste (SO) y Oeste (O).
+    * Un movimiento es válido si los índices del estado en la "matriz" de estados no son
+    * menores a 0 y mayores a el tamaño del lado de la matriz de estados.
     */
     public static void inicializarEstados(){
+        //inicializar el vector estados
         cargarEstados();
         int lado;
         lado = ConfTab.getSize();
-        // Poner todos los estados a nuetro
         for (int i = 0; i < lado*lado; i++) {
-            
-            estados[i].setRecompensa(ConfTab.getrNeutro());
-            
             //inicializando la lista de acciones posibles
             int posY = i/lado;
             int posX = i%lado;
@@ -116,6 +119,9 @@ public class Matriz {
         }
      }
   
+    /**
+     * En este método se aplica Q-Learning
+     */
     public static void aprendizaje(){
         long tiempoInicio = System.currentTimeMillis(); // Para controlar el tiempo
         Random aleat = new Random();
@@ -123,6 +129,7 @@ public class Matriz {
         int i = 0; 
         float nuevoQ;
         inicializarMatQ();
+        boolean esPozo=false;
         while (i < ConfTab.getEpisodios() && !compMatQ){
             int indice = ConfTab.getSize()*ConfTab.getSize();
             int posAleat = aleat.nextInt(indice);
@@ -130,30 +137,29 @@ public class Matriz {
             int posAccion ;
             boolean trancada = false;
             do {
+                //selección de la acción según la política de selección elegida
                 if (ConfTab.getEpsilon()!= -1) {
                     posAccion = p.eGreedy(e);
                 } else {
                     posAccion = p.softmax(e);
                 }
-                //posAccion = e.accionAleatoria();
-                //float a = estados[e.acciones.get(posAccion).getDestino()].getRecompensa();
+                //cálculo de la función de valor
                 float a = e.getRecompensa();
                 float b = ConfTab.getGamma();
                 int aux = e.acciones.get(posAccion).getDestino();
                 float c = estados[aux].acciones.get(estados[aux].posAccionMayorQ()).getValorQ();
-                //float c = e.acciones.get(e.posAccionMayorQ()).getValorQ();
-                //nuevoQ = e.getRecompensa()+ConfTab.getGamma()*e.acciones.get(e.accionMayorQ()).getValorQ();
                 nuevoQ = (a + (b*c));
                 e.acciones.get(posAccion).setValorQ(nuevoQ); 
+                //verificación si el estado es Pozo
                 if (e.getRecompensa()== ConfTab.getrPozo()){
-                   //e.acciones.get(posAccion).setValorQ(-100000);
-                   break;
+                   esPozo=true;
                 }
                 e = estados[e.acciones.get(posAccion).getDestino()];
+                //verificación del tiempo transcurrido en el episodio
                 long transcurrido = System.currentTimeMillis() - tiempoInicio;		
 		if(transcurrido > ConfTab.tiempoLimite)
 			trancada = true;
-            } while (e.getRecompensa() != ConfTab.getrFin() && !trancada);
+            } while (e.getRecompensa() != ConfTab.getrFin() && !trancada && !esPozo);
             i++;
             System.out.println("numero de episodio" + i);
 //            if ((i%50) == 0) {
@@ -161,11 +167,9 @@ public class Matriz {
 //                    reducirQ(estados[j]);
 //                }
 //            }
+            // cada 100 episodios, verifica la evolución del aprendizaje
             if ((i%100) == 0){ 
-                //testMatrizQ(matQAnt);
-                //testMatrizQ(matQSig);
                 cargarValoresQ();
-                //testMatrizQ(matQAnt);
                 compMatQ = compararMatricesQ();
                 System.arraycopy(matQSig, 0, matQAnt, 0, estados.length);
                 if (compMatQ) {
@@ -174,11 +178,13 @@ public class Matriz {
             }
         }
     }
-    
-        //borra la lista de acciones del estado final y agrega una única accion
-        //con destino a sí mismo y valor Q ConfTab.valorQ   
+      
+    /**
+     * borra la lista de acciones del estado final y agrega una única accion
+     * con destino a sí mismo y valor Q ConfTab.valorQ
+     * @param posAbs: posición del estado final 
+     */
     public static void actualizarEstadoFinal(int posAbs){
-        //estados[posAbs].setRecompensa(ConfTab.getrFin()); //agregado sólo para probar desde aca
         estados[posAbs].acciones.clear();
         Accion a = new Accion();
         a.setDestino(posAbs);
@@ -195,21 +201,23 @@ public class Matriz {
 //        }
 //    }    
     
-    // inicializa los arreglos estados, mat1 y mat2 con la long size*size
-    // agrega un estado a cada posicion del vector estados
+    /**
+     * inicializa el arreglo estados con la long size*size y
+     * agrega un estado a cada posicion del vector
+     */
     public static void cargarEstados(){
         estados = new Estado[ConfTab.getSize()*ConfTab.getSize()];
-        //vectores para comparación de matrices Q
-        
         for (int i = 0;i<estados.length;i++){
             Estado e = new Estado();
             e.setPosAbs(i);
-            e.setRecompensa(0);
             estados[i]= e;
-            
         }
     }
     
+    /**
+     * inicializa los vectores con los cuales se hace la verificación de la estabilización
+     * del aprendizaje.
+     */        
     public static void inicializarMatQ (){
         compMatQ = false;
         matQAnt = new float[ConfTab.getSize()*ConfTab.getSize()];
@@ -220,9 +228,16 @@ public class Matriz {
         }
     }
     
-    // desde el estado de posicion inicial, toma la acción del mayor Q. El estado siguiente es  el estado destino de esa accion
-    // se guarda la posición del estado actual en un ArrayList para saber cuál es el camino recorrido
-    // se almacena la posicion del estado inicial y también la posicion absoluta del estado final
+    //  
+    // 
+    // 
+    /**
+     * Desde el estado de posicion inicial, toma la acción del mayor Q. El estado siguiente
+     * es  el estado destino de esa accion.
+     * Se guarda la posición del estado actual en un ArrayList para saber cuál es el camino recorrido
+     * Se almacena la posicion del estado inicial y también la posicion absoluta del estado final
+     * @return recorrido: lista de estados visitados
+     */
     public static ArrayList recorrer(){
         long tiempoInicio = System.currentTimeMillis(); // Para controlar el tiempo
         ArrayList recorrido = new ArrayList();
@@ -266,7 +281,7 @@ public class Matriz {
         }
         System.out.println("error: " + error);
         if (error <= ConfTab.getTolerancia()) { 
-            return true; // significa que no hay grandes modificaciones en el aprendizaje
+            return true; // significa que no hay grandes variaciones en el aprendizaje
         } else return false;
     }
     
