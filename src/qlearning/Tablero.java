@@ -546,6 +546,7 @@ public class Tablero extends JFrame implements ActionListener {
         finalUnico();
         matrizR();
         Matriz.aprendizaje();
+        mostrarRecorrido();
         this.setCursor(Cursor.DEFAULT_CURSOR);
 
     }//GEN-LAST:event_btnAprendeActionPerformed
@@ -629,7 +630,7 @@ public class Tablero extends JFrame implements ActionListener {
     }//GEN-LAST:event_textNeutroFocusLost
 
     private void textEpFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textEpFocusLost
-        ConfTab.setrFin(Integer.parseInt(textFinal.getText()));
+        ConfTab.setEpisodios(Integer.parseInt(textEp.getText()));
     }//GEN-LAST:event_textEpFocusLost
 
     private void textGammaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textGammaFocusLost
