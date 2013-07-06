@@ -546,6 +546,7 @@ public class Tablero extends JFrame implements ActionListener {
         finalUnico();
         matrizR();
         Matriz.aprendizaje();
+        mostrarRecorrido();
         this.setCursor(Cursor.DEFAULT_CURSOR);
 
     }//GEN-LAST:event_btnAprendeActionPerformed
