@@ -60,7 +60,7 @@ public class Politica {
             limSup += a.getProb();
             if (rand > limInf && rand < limSup) {
                 y = i;
-                break;
+                return y;
             }
             limInf += a.getProb();
         }

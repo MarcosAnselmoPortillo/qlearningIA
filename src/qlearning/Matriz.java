@@ -148,8 +148,8 @@ public class Matriz {
                     posAccion = p.softmax(e);
                 }
                 //cálculo de la función de valor
-                float a = e.getRecompensa();
-                //float a = estados[e.acciones.get(posAccion).getDestino()].recompensa;
+                //float a = e.getRecompensa();
+                float a = estados[e.acciones.get(posAccion).getDestino()].recompensa;
                 float b = ConfTab.getGamma();
                 int aux = e.acciones.get(posAccion).getDestino();
                 float c = estados[aux].acciones.get(estados[aux].posAccionMayorQ()).getValorQ();
