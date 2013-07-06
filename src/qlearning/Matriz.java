@@ -24,6 +24,8 @@ public class Matriz {
     
     public static float[] matQSig;
     
+    public static float[] matQ;
+    
     public static boolean compMatQ = false;
     /**
     * Se agregan todas las acciones posibles que cada estado puede realizar y se setea
@@ -256,6 +258,7 @@ public class Matriz {
      * @return recorrido: lista de estados visitados
      */
     public static ArrayList recorrer(){
+        testMatrizQ(obtenerMatrizQ());
         long tiempoInicio = System.currentTimeMillis(); // Para controlar el tiempo
         ArrayList recorrido = new ArrayList();
         int posEstado = Tablero.posInic;
@@ -404,9 +407,13 @@ public class Matriz {
 		}
     }
     
-    public static void testMatrizQ(){
-        System.out.println("MatrizQ");
-        
+    public static float[] obtenerMatrizQ(){
+        matQ = new float[ConfTab.getSize()*ConfTab.getSize()];
+        for (int i = 0; i < (ConfTab.getSize()*ConfTab.getSize()); i++) {
+            int posAccion = estados[i].posAccionMayorQ();
+            matQ[i]= estados[i].acciones.get(posAccion).getValorQ();
+        }
+        return matQ;
     }
 
 }
