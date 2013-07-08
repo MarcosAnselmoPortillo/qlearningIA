@@ -17,7 +17,10 @@ public class Matriz {
      * lo q tengo q ver es como definir que los elementos 
      * sean solo de tipo Estado
      */
-   
+    public Matriz(){
+        aprendizaje = new aprender();
+       
+    }
     public static Estado[] estados; //Arreglo de elementos tipo Estado  
     
     public static float[] matQAnt;
@@ -27,6 +30,9 @@ public class Matriz {
     public static float[] matQ;
     
     public static boolean compMatQ = false;
+    
+    public static aprender aprendizaje;
+    
     /**
     * Se agregan todas las acciones posibles que cada estado puede realizar y se setea
     * el valor de Q incial en cada acción.
@@ -119,19 +125,23 @@ public class Matriz {
                 estados[i].acciones.add(a);
             }              
         }
+         aprendizaje.start();
      }
   
     /**
      * En este método se aplica Q-Learning
      */
-    public static void aprendizaje(){
-        Random aleat = new Random();
-        Politica p = new Politica();
-        int i = 0; 
-        float nuevoQ;
-        inicializarMatQ();
-        actualizarEstadosPozo();
-        
+    
+    public class aprender extends Thread{
+        public void run(){
+         
+                Random aleat = new Random();
+                Politica p = new Politica();
+                int i = 0; 
+                float nuevoQ;
+                inicializarMatQ();
+                actualizarEstadosPozo();
+                int corte = ConfTab.corteEpisodios;
         while (i < ConfTab.getEpisodios() && !compMatQ){
             long tiempoInicio = System.currentTimeMillis(); // Para controlar el tiempo
             int indice = ConfTab.getSize()*ConfTab.getSize();
@@ -141,6 +151,7 @@ public class Matriz {
             boolean trancada = false;
             boolean esPozo=false;
             do {
+                
                 //selección de la acción según la política de selección elegida
                 if (ConfTab.getEpsilon()!= -1) {
                     posAccion = p.eGreedy(e);
@@ -181,9 +192,17 @@ public class Matriz {
                     System.out.println("Episodio en que se estabiliza: " + i);
                 }
             }
+            
+            if (i == corte){
+                    aprendizaje.suspend();
+                    corte += ConfTab.corteEpisodios;
+                }
         }
         
     }
+        
+        }
+        
       
     /**
      * borra la lista de acciones del estado final y agrega una única accion
@@ -326,74 +345,7 @@ public class Matriz {
         } else return false;
     }
  
-    //////////////PARA PRUEBAS///////////////////////
 
-    
-//     //escribir la matriz R
-//    public static void testMatrizR(){
-//        System.out.println("Matriz R");
-//        int lado = ConfTab.getSize();
-//	for(int y = 0; y < lado; y++) {
-//		for(int x = 0; x < lado; x++)
-//                        System.out.print(estados[x + y*lado].getRecompensa()+ " ");
-//			
-//		System.out.println();
-//		}
-//    }
-    
-//    public static void main (String[] args){
-//        //ConfTab x = new ConfTab();
-//        ConfTab.setSize(6);
-//        inicializarEstados();
-//        estadosAleat();
-//        actualizarEstadoFinal(3);
-//        //cargarRecompensasTest();
-//        //ConfTab.setEpsilon((float)0.2);
-//        testMatrizR();
-//        ConfTab.setEpisodios(10000);
-//        aprendizaje();
-//        testMatrizR();
-//    }
-//        public static void estadosAleat(){
-//         int lado;
-//         lado = ConfTab.getSize();
-//         Random aleat = new Random();
-//         for (int i = 0; i < lado*lado; i++) {
-//             float numale = aleat.nextFloat();
-//             if (numale<0.2) {
-//                 estados[i].setRecompensa(ConfTab.getrMalo());
-//                 
-//                } else {
-//                 if (numale < 0.4){
-//                     estados[i].setRecompensa(ConfTab.getrPozo());
-//                     
-//                 } else {
-//                     if (numale < 0.6){
-//                         estados[i].setRecompensa(ConfTab.getrNeutro());
-//                     } else {
-//                         if (numale < 0.75){
-//                             estados[i].setRecompensa(ConfTab.getrBueno());
-//                         } else {
-//                             if (numale < 1){
-//                                 estados[i].setRecompensa(ConfTab.getrExc());
-//                             }
-//                         }
-//                     }
-//                 }
-//             }          
-//        }
-//     }
-//        
-//        public static void cargarRecompensasTest(){
-//            estados[0].setRecompensa(ConfTab.getrPozo());
-//            estados[1].setRecompensa(ConfTab.getrNeutro());
-//            estados[2].setRecompensa(ConfTab.getrPozo());
-//            estados[7].setRecompensa(ConfTab.getrMalo());
-//            estados[5].setRecompensa(ConfTab.getrNeutro());
-//            estados[8].setRecompensa(ConfTab.getrBueno());
-//            estados[6].setRecompensa(ConfTab.getrExc());
-//            estados[4].setRecompensa(ConfTab.getrNeutro());
-//        }
 
          //escribir la matriz Q
     public static void testMatrizQ(float[] matriz){
@@ -409,10 +361,11 @@ public class Matriz {
     
     public static float[] obtenerMatrizQ(){
         matQ = new float[ConfTab.getSize()*ConfTab.getSize()];
-        for (int i = 0; i < (ConfTab.getSize()*ConfTab.getSize()); i++) {
-            int posAccion = estados[i].posAccionMayorQ();
-            matQ[i]= estados[i].acciones.get(posAccion).getValorQ();
-        }
+            for (int i = 0; i < (ConfTab.getSize()*ConfTab.getSize()); i++) {
+                int posAccion = estados[i].posAccionMayorQ();
+                matQ[i]= estados[i].acciones.get(posAccion).getValorQ();
+            }
+        
         return matQ;
     }
 

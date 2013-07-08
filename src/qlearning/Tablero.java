@@ -41,6 +41,7 @@ public class Tablero extends JFrame implements ActionListener {
         textNeutro.setText(String.valueOf(ConfTab.getrNeutro()));
         textEp.setText(String.valueOf(ConfTab.getEpisodios()));
         textGamma.setText(String.valueOf(ConfTab.getGamma()));
+        jTextField1.setText(String.valueOf(ConfTab.getEpisodios()));
 //        panConsola.setLayout(new BorderLayout());
 //        panConsola.add(textArea, BorderLayout.CENTER);
         panGral.setLayout(new BorderLayout());
@@ -63,7 +64,7 @@ public class Tablero extends JFrame implements ActionListener {
     public static int posFinal;
     public static int posInic = 0;
     public static int episodio = 0;
-    
+    public Matriz m;
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -249,6 +250,11 @@ public class Tablero extends JFrame implements ActionListener {
         });
 
         btnContinuar.setText("Continuar");
+        btnContinuar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnContinuarActionPerformed(evt);
+            }
+        });
 
         btnFinal.setText("Ir al Final");
         btnFinal.addActionListener(new java.awt.event.ActionListener() {
@@ -619,9 +625,8 @@ public class Tablero extends JFrame implements ActionListener {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panConsolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panConsolaLayout.createSequentialGroup()
-                        .addComponent(panAvance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                    .addComponent(panAvance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout panGralLayout = new javax.swing.GroupLayout(panGral);
@@ -688,11 +693,14 @@ public class Tablero extends JFrame implements ActionListener {
     private void btnAprendeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAprendeActionPerformed
         
         this.setCursor(Cursor.WAIT_CURSOR);
+        ConfTab.corteEpisodios = Integer.valueOf(jTextField1.getText());
         politicaElegida();
-        Matriz.inicializarEstados();
+        m = new Matriz();
+        m.inicializarEstados();
         finalUnico();
         matrizR();
-        Matriz.aprendizaje();
+        
+        
         this.setCursor(Cursor.DEFAULT_CURSOR);
 
     }//GEN-LAST:event_btnAprendeActionPerformed
@@ -798,13 +806,18 @@ public class Tablero extends JFrame implements ActionListener {
     }//GEN-LAST:event_btnRecorrerActionPerformed
 
     private void btnFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalActionPerformed
-        // TODO add your handling code here:
+       ConfTab.corteEpisodios = ConfTab.getEpisodios();
+       m.aprendizaje.resume();
     }//GEN-LAST:event_btnFinalActionPerformed
 
     private void btnMostrarQActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarQActionPerformed
         MatrizQ m = new MatrizQ();
         m.setVisible(true);
     }//GEN-LAST:event_btnMostrarQActionPerformed
+
+    private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
+       m.aprendizaje.resume();
+    }//GEN-LAST:event_btnContinuarActionPerformed
     
     // <editor-fold defaultstate="collapsed" desc="sizeDePantalla () Toma el valor de tamaño del tablero desde el comboBox">
     private void sizeDePantalla (){

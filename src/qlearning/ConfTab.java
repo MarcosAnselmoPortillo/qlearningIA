@@ -33,6 +33,8 @@ public class ConfTab {
     public static float valorQ = 100; // Valor por defecto de Q
     
     public static long tiempoLimite = 1000;
+    
+    public static int corteEpisodios = 0;
 
     public static float getValorQ() {
         return valorQ;
