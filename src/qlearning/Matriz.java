@@ -192,7 +192,6 @@ public class Matriz {
                         corte += ConfTab.corteEpisodios;
                     }
             }
-
         }
         
    }
@@ -277,6 +276,7 @@ public class Matriz {
             while (estados[posEstado].getRecompensa()!=ConfTab.getrFin() && !acorralado){
                 recorrido.add(posEstado);
                 posAccion = estados[posEstado].posAccionMayorQ();
+                recorrido.add(estados[posEstado].acciones.get(posAccion).valorQ);
                 posEstado = estados[posEstado].acciones.get(posAccion).getDestino();
                 System.out.println("Estados visitados:" + posEstado);
                 long transcurrido = System.currentTimeMillis() - tiempoInicio;		
