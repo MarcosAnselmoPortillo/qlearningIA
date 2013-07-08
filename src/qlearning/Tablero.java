@@ -41,6 +41,7 @@ public class Tablero extends JFrame implements ActionListener {
         textNeutro.setText(String.valueOf(ConfTab.getrNeutro()));
         textEp.setText(String.valueOf(ConfTab.getEpisodios()));
         textGamma.setText(String.valueOf(ConfTab.getGamma()));
+        jTextField1.setText(String.valueOf(ConfTab.getEpisodios()));
 //        panConsola.setLayout(new BorderLayout());
 //        panConsola.add(textArea, BorderLayout.CENTER);
         panGral.setLayout(new BorderLayout());
