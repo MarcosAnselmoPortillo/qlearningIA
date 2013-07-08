@@ -243,6 +243,7 @@ public class Tablero extends JFrame implements ActionListener {
         jSeparator3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Comparación de Matriz Q", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         btnMostrarQ.setText("Ver Q");
+        btnMostrarQ.setEnabled(false);
         btnMostrarQ.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMostrarQActionPerformed(evt);
@@ -697,10 +698,9 @@ public class Tablero extends JFrame implements ActionListener {
         politicaElegida();
         m = new Matriz();
         m.inicializarEstados();
+        btnMostrarQ.setEnabled(true);
         finalUnico();
         matrizR();
-        
-        
         this.setCursor(Cursor.DEFAULT_CURSOR);
 
     }//GEN-LAST:event_btnAprendeActionPerformed
@@ -839,6 +839,7 @@ public class Tablero extends JFrame implements ActionListener {
     }
     //</editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc="mapaPantalla() Genera el tipo de tablero seleccionado">
     public void mapaPantalla(){
         String aux = (String) comboMapa.getSelectedItem();
         switch(aux){
@@ -852,8 +853,9 @@ public class Tablero extends JFrame implements ActionListener {
                 break;
         }
     }
+    //</editor-fold>
     
-    //Toma el valor de que tipo de estado se quiere colocar en el tablero
+    //<editor-fold defaultstate="collapsed" desc="tipoDePantalla() Toma el valor de que tipo de estado se quiere colocar en el tablero">
     public String tipoDePantalla(){
         String aux = (String) comboTipo.getSelectedItem();
         switch(aux){
@@ -895,7 +897,7 @@ public class Tablero extends JFrame implements ActionListener {
         }
         return aux;
     }
-    
+    //</editor-fold>
     
     //Dependiendo de que politica se selecciona actualiza el valor de epsilon o tau en la clase ConfTab
     public void politicaElegida(){
@@ -1164,6 +1166,7 @@ public class Tablero extends JFrame implements ActionListener {
         if (elCamino.isEmpty())
             JOptionPane.showMessageDialog(jFrame1, "No es posible llegar al final", "Estado inalcanzable", JOptionPane.ERROR_MESSAGE);
         for (int i = 0; i < elCamino.size(); i++) {
+            estados[(int)elCamino.get(i)].setText("E "+elCamino.get(i));
             estados[(int)elCamino.get(i)].setBorder(linea);
             textArea.append("Estados visitados:" + String.valueOf(elCamino.get(i))+"\n" );
             panCentro.remove((int) elCamino.get(i));
