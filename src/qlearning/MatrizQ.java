@@ -8,8 +8,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.text.DecimalFormat;
+import javax.swing.BorderFactory;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 /**
  *
@@ -29,24 +32,28 @@ public class MatrizQ extends javax.swing.JFrame {
     }
     
     public void iniciar(){
-        float[] q = Matriz.obtenerMatrizQ();
+//        float[] q = Matriz.obtenerMatrizQ();
+//        int size = ConfTab.size;
+//        Font fuente = new Font(Font.DIALOG, Font.BOLD, 12);
+//        panCentro.setVisible(false);
+//        panCentro.removeAll();
+//        panCentro.setLayout(new GridLayout(size, size));
+//        DecimalFormat df = new DecimalFormat("#.##");
+//        Border borde = BorderFactory.createEtchedBorder(Color.lightGray, Color.WHITE);
+//        for (int i = 0; i < (size*size); i++) {
+//                            
+//            final JTextArea temp = new JTextArea();
+//            temp.setBorder(borde);
+//            temp.setFont(fuente);
+//            temp.setBackground(Color.BLUE);
+//            temp.setForeground(Color.WHITE);
+//            temp.setText("Estado"+i+"\nValor Q = "+df.format(q[i]));
+//            
+//            //agregar el campo al panel
+//            panCentro.add(temp);
+//        }
+//        panCentro.setVisible(true);
         int size = ConfTab.size;
-        Font fuente = new Font(Font.DIALOG, Font.BOLD, 12);
-        panCentro.setVisible(false);
-        panCentro.removeAll();
-        panCentro.setLayout(new GridLayout(size, size));
-        for (int i = 0; i < (size*size); i++) {
-                            
-            final JTextArea temp = new JTextArea();
-            temp.setFont(fuente);
-            temp.setBackground(Color.BLUE);
-            temp.setForeground(Color.WHITE);
-            temp.setText("Estado"+i+"\nValor Q"+Float.toString(q[i]));
-            
-            //agregar el campo al panel
-            panCentro.add(temp);
-        }
-        panCentro.setVisible(true);
         
     }
 
@@ -100,7 +107,7 @@ public class MatrizQ extends javax.swing.JFrame {
         );
         panCentroLayout.setVerticalGroup(
             panCentroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 238, Short.MAX_VALUE)
+            .addGap(0, 375, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout panPrincLayout = new javax.swing.GroupLayout(panPrinc);
@@ -120,8 +127,8 @@ public class MatrizQ extends javax.swing.JFrame {
         panPrincLayout.setVerticalGroup(
             panPrincLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panPrincLayout.createSequentialGroup()
-                .addComponent(panCentro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
+                .addComponent(panCentro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(panSur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
