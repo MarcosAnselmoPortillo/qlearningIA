@@ -125,7 +125,7 @@ public class Matriz {
                 estados[i].acciones.add(a);
             }              
         }
-         aprendizaje.start();
+        aprendizaje.start(); 
      }
   
     /**
