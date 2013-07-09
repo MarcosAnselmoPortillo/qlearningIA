@@ -133,6 +133,7 @@ public class Matriz {
      */
     public class aprender extends Thread{
         
+        public int episodios = 0;
         public void run(){ 
             Random aleat = new Random();
             Politica p = new Politica();

@@ -1171,7 +1171,7 @@ public class Tablero extends JFrame implements ActionListener {
             total += (float) elCamino.get(i+1);
             panCentro.remove((int) elCamino.get(i));
             panCentro.add(estados[(int)elCamino.get(i)], (int)elCamino.get(i));
-            i++; 
+            i+=1; 
         }
         textArea.append("Q acumulado = "+total);
     }
