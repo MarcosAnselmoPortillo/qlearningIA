@@ -195,7 +195,7 @@ public class Matriz {
                     }
                 Tablero.textArea.setText("Aprendiendo...  Episodio: "+i);
             }
-            Tablero.textArea.setText("Aprendizaje Finalizado");
+            Tablero.textArea.setText("Aprendizaje Finalizado  Episodio: "+i);
         }
         
    }
