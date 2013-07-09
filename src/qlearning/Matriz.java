@@ -286,10 +286,15 @@ public class Matriz {
                     System.out.println("se cortó por tiempo en el recorrido");
                 }
             }
+            
         }
         if (acorralado){
             recorrido.clear();
-        } else recorrido.add(posEstado);
+        } else {
+            recorrido.add(posEstado);
+            posAccion = estados[posEstado].posAccionMayorQ();
+            recorrido.add(estados[posEstado].acciones.get(posAccion).valorQ);
+        }
         return recorrido;
         
     }

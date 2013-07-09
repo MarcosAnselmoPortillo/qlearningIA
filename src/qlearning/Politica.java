@@ -64,7 +64,6 @@ public class Politica {
             }
             limInf += a.getProb();
         }
-        //return e.acciones.get(y);
         return y;
     }
 }
