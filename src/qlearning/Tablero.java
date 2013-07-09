@@ -1164,7 +1164,7 @@ public class Tablero extends JFrame implements ActionListener {
         float total = 0;
         if (elCamino.isEmpty())
             JOptionPane.showMessageDialog(jFrame1, "No es posible llegar al final", "Estado inalcanzable", JOptionPane.ERROR_MESSAGE);
-        for (int i = 0; i < (elCamino.size()-1); i++) {
+        for (int i = 0; i < (elCamino.size()); i++) {
             estados[(int)elCamino.get(i)].setText("E "+elCamino.get(i));
             estados[(int)elCamino.get(i)].setBorder(linea);
             textArea.append("Estado visitado:" + String.valueOf(elCamino.get(i))+" Q = "+String.valueOf(elCamino.get(i+1))+"\n" );
