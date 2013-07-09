@@ -143,6 +143,7 @@ public class Matriz {
             actualizarEstadosPozo();
             int corte = ConfTab.corteEpisodios;
             while (i < ConfTab.getEpisodios() && !compMatQ){
+                //Tablero.textArea.setText("Aprendiendo.");
                 long tiempoInicio = System.currentTimeMillis(); // Para controlar el tiempo
                 int indice = ConfTab.getSize()*ConfTab.getSize();
                 int posAleat = aleat.nextInt(indice);
@@ -192,7 +193,9 @@ public class Matriz {
                         aprendizaje.suspend();
                         corte += ConfTab.corteEpisodios;
                     }
+                Tablero.textArea.setText("Aprendiendo...  Episodio: "+i);
             }
+            Tablero.textArea.setText("Aprendizaje Finalizado");
         }
         
    }
